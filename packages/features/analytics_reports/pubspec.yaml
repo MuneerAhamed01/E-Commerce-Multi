@@ -1,0 +1,22 @@
+name: analytics_reports
+resolution: workspace
+description: >
+  Sales/traffic aggregation and deeper reporting for the admin dashboard.
+  See docs/04_FEATURE_IMPLEMENTATION_ORDER.md for the full specification.
+version: 0.1.0
+publish_to: "none"
+
+environment:
+  sdk: ">=3.12.0 <4.0.0"
+  flutter: ">=3.44.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  # core, design_system, flutter_bloc, go_router, injectable:
+  # wired when this feature's implementation phase begins
+  # (Phase 22, see docs/03_DEVELOPMENT_PHASES.md).
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter

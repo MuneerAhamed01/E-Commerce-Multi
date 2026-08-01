@@ -1,0 +1,20 @@
+
+# FVM Version Cache
+.fvm/
+
+# Dart / Flutter (workspace-root artifacts; each package has its own
+# generated .gitignore for its own build/.dart_tool/etc.)
+.dart_tool/
+.packages
+.flutter-plugins
+.flutter-plugins-dependencies
+build/
+
+# IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# OS
+.DS_Store

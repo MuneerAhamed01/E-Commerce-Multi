@@ -1,0 +1,20 @@
+name: core
+resolution: workspace
+description: >
+  Cross-cutting infrastructure for the White Label Commerce Platform:
+  error handling, use case contracts, dependency injection bootstrap,
+  logging, configuration, and shared utilities. Pure Dart - no Flutter
+  dependency, and no dependency on any feature package or app
+  (see docs/02_PROJECT_STRUCTURE.md §4 and §12).
+version: 0.1.0
+publish_to: "none"
+
+environment:
+  sdk: ">=3.12.0 <4.0.0"
+
+dependencies:
+  # Populated in Phase 2 (docs/03_DEVELOPMENT_PHASES.md): equatable, dartz/Result,
+  # get_it, injectable, logging, etc.
+
+dev_dependencies:
+  test: ^1.25.6

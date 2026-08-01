@@ -1,0 +1,58 @@
+# White Label Commerce Platform
+
+Production-ready, multi-tenant, white-label e-commerce platform: Flutter Mobile + Flutter Web storefront, and a Flutter Admin Panel, built on Clean Architecture with Firebase-ready data contracts.
+
+**Status: Phase 1 (Project Foundation) complete.** The monorepo, tooling, and both app shells are scaffolded per `docs/03_DEVELOPMENT_PHASES.md`. See `docs/14_IMPLEMENTATION_PROGRESS.md` for live milestone status. All subsequent phases proceed strictly in the documented order.
+
+## Getting Started
+
+Prerequisites (one-time, per machine):
+
+```bash
+brew install fvm            # Flutter Version Manager
+dart pub global activate melos
+```
+
+Clone the repo, then from the repository root:
+
+```bash
+fvm install                 # installs the pinned Flutter SDK (see .fvmrc)
+melos bootstrap             # resolves the shared pub workspace (see pubspec.yaml `workspace:`)
+melos run analyze           # static analysis, every package
+melos run format            # formatting check, every package
+melos run test               # unit/widget tests, every package with a test/ dir
+```
+
+Run an app (always via an explicit flavor entry point - there is no bare `main.dart`):
+
+```bash
+cd apps/storefront && fvm flutter run -t lib/main_dev.dart
+cd apps/admin       && fvm flutter run -t lib/main_dev.dart -d chrome
+```
+
+This repository pins its Flutter/Dart SDK via [fvm](https://fvm.app/) (`.fvmrc` at the root - every package inherits it, no per-package pinning needed) and uses a single [pub workspace](https://dart.dev/tools/pub/workspaces) (`workspace:` in the root `pubspec.yaml`) for unified dependency resolution across all 26 packages/apps, orchestrated by [Melos](https://melos.invertase.dev/) (`melos:` key in the root `pubspec.yaml`) for cross-package scripts. See `docs/02_PROJECT_STRUCTURE.md` for the full monorepo layout.
+
+## Start Here
+
+Read the full planning package in [`docs/`](docs/), starting with [`docs/01_IMPLEMENTATION_PLAN.md`](docs/01_IMPLEMENTATION_PLAN.md).
+
+| Doc | Purpose |
+|---|---|
+| [01_IMPLEMENTATION_PLAN.md](docs/01_IMPLEMENTATION_PLAN.md) | Vision, scope, milestones index, risks, success criteria |
+| [02_PROJECT_STRUCTURE.md](docs/02_PROJECT_STRUCTURE.md) | Full monorepo folder structure and naming conventions |
+| [03_DEVELOPMENT_PHASES.md](docs/03_DEVELOPMENT_PHASES.md) | 29 phases broken into 2–6 hour milestones |
+| [04_FEATURE_IMPLEMENTATION_ORDER.md](docs/04_FEATURE_IMPLEMENTATION_ORDER.md) | Every feature, fully specified, in dependency order |
+| [05_ARCHITECTURE_GUIDELINES.md](docs/05_ARCHITECTURE_GUIDELINES.md) | Clean Architecture rules and future backend integration strategy |
+| [06_DEVELOPMENT_RULES.md](docs/06_DEVELOPMENT_RULES.md) | Mandatory rules for every engineer/AI agent |
+| [07_SCREEN_CATALOG.md](docs/07_SCREEN_CATALOG.md) | Every screen, fully specified |
+| [08_COMPONENT_LIBRARY.md](docs/08_COMPONENT_LIBRARY.md) | Every reusable UI component |
+| [09_ROUTING_PLAN.md](docs/09_ROUTING_PLAN.md) | Complete `go_router` routing strategy |
+| [10_DATA_FLOW.md](docs/10_DATA_FLOW.md) | Mock → Domain → Bloc → UI data flow and future Firebase swap |
+| [11_ENVIRONMENT_CONFIGURATION.md](docs/11_ENVIRONMENT_CONFIGURATION.md) | Environments, flavors, secrets, feature flags |
+| [12_MANUAL_TEST_PLAN.md](docs/12_MANUAL_TEST_PLAN.md) | Full manual QA checklist |
+| [13_CLIENT_DELIVERY_CHECKLIST.md](docs/13_CLIENT_DELIVERY_CHECKLIST.md) | Everything required before client handoff |
+| [14_IMPLEMENTATION_PROGRESS.md](docs/14_IMPLEMENTATION_PROGRESS.md) | Live status tracker (⬜ / 🟨 / 🟩) — kept up to date during development |
+
+## Development Process
+
+Implementation proceeds strictly in the order defined in `docs/03_DEVELOPMENT_PHASES.md`, in small (2-6 hour) reviewable milestones. No feature's widgets, blocs, or repositories are written ahead of its own phase. `docs/14_IMPLEMENTATION_PROGRESS.md` is updated at the end of every milestone and is the source of truth for what has actually been built.

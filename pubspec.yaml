@@ -1,0 +1,70 @@
+name: white_label_commerce_platform_workspace
+description: >
+  Monorepo workspace root for the White Label Commerce Platform.
+  This package is not published and contains no application code -
+  it exists only to define the pub workspace (see
+  https://dart.dev/tools/pub/workspaces) and host Melos-managed scripts.
+publish_to: "none"
+
+environment:
+  sdk: ">=3.12.0 <4.0.0"
+
+workspace:
+  - apps/storefront
+  - apps/admin
+  - packages/core
+  - packages/design_system
+  - packages/features/authentication
+  - packages/features/dashboard
+  - packages/features/products
+  - packages/features/categories
+  - packages/features/search
+  - packages/features/wishlist
+  - packages/features/cart
+  - packages/features/checkout
+  - packages/features/orders
+  - packages/features/payments
+  - packages/features/notifications
+  - packages/features/profile
+  - packages/features/settings
+  - packages/features/support
+  - packages/features/admin_dashboard
+  - packages/features/admin_catalog
+  - packages/features/admin_inventory
+  - packages/features/admin_orders
+  - packages/features/admin_customers
+  - packages/features/marketing
+  - packages/features/analytics_reports
+  - packages/features/tenant_management
+
+dev_dependencies:
+  melos: ^8.2.0
+
+melos:
+  command:
+    bootstrap:
+      runPubGetInParallel: true
+    clean:
+      hooks:
+        pre: melos exec -- "fvm flutter clean"
+
+  scripts:
+    analyze:
+      run: melos exec -- "fvm flutter analyze ."
+      description: Run static analysis across every package and app.
+
+    format:
+      run: melos exec -- "fvm dart format --set-exit-if-changed ."
+      description: Check formatting across every package and app (CI gate, non-mutating).
+
+    format:fix:
+      run: melos exec -- "fvm dart format ."
+      description: Auto-format every package and app.
+
+    test:
+      run: melos exec --dir-exists=test -- "fvm flutter test"
+      description: Run unit/widget tests in every package that has a test/ directory.
+
+    build:runner:
+      run: melos exec --depends-on=build_runner -- "fvm dart run build_runner build --delete-conflicting-outputs"
+      description: Run code generation (freezed/json_serializable/injectable) in every package that depends on build_runner.
