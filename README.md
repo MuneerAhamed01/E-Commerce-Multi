@@ -2,7 +2,7 @@
 
 Production-ready, multi-tenant, white-label e-commerce platform: Flutter Mobile + Flutter Web storefront, and a Flutter Admin Panel, built on Clean Architecture with Firebase-ready data contracts.
 
-**Status: Phase 1 (Project Foundation) complete.** The monorepo, tooling, and both app shells are scaffolded per `docs/03_DEVELOPMENT_PHASES.md`. See `docs/14_IMPLEMENTATION_PROGRESS.md` for live milestone status. All subsequent phases proceed strictly in the documented order.
+**Status: Phase 2 (Core Architecture) complete.** The monorepo/tooling/app shells are scaffolded (Phase 1) and `packages/core` now has its error handling, use case/pagination contracts, DI bootstrap, logging/network contracts, and shared entities/utils - all unit-tested (Phase 2). See `docs/14_IMPLEMENTATION_PROGRESS.md` for live milestone status. All subsequent phases proceed strictly in the documented order.
 
 ## Getting Started
 

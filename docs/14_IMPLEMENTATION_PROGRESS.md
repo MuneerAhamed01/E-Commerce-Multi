@@ -14,12 +14,12 @@
 |---|---|
 | Total Phases | 29 |
 | Total Milestones | 98 |
-| 🟩 Completed | 4 |
+| 🟩 Completed | 9 |
 | 🟨 In Progress | 0 |
-| ⬜ Pending | 94 |
-| **Overall Completion** | **4%** |
+| ⬜ Pending | 89 |
+| **Overall Completion** | **9%** |
 | Plan Approval Status | 🟩 Approved (implementation underway) |
-| Last Updated | 2026-08-01 (Phase 1 complete) |
+| Last Updated | 2026-08-01 (Phase 2 complete) |
 
 ---
 
@@ -36,11 +36,11 @@
 
 | ID | Milestone | Status | Completion Date | Notes |
 |---|---|---|---|---|
-| 2.1 | Error handling & Result type | ⬜ Pending | | |
-| 2.2 | UseCase base & pagination | ⬜ Pending | | |
-| 2.3 | DI bootstrap | ⬜ Pending | | |
-| 2.4 | Logging & network_info | ⬜ Pending | | |
-| 2.5 | Shared entities & utils | ⬜ Pending | | |
+| 2.1 | Error handling & Result type | 🟩 Complete | 2026-08-01 | Sealed `Failure` hierarchy (`ServerFailure`, `CacheFailure`, `NetworkFailure`, `ValidationFailure`, `NotFoundFailure`, `UnauthorizedFailure`, `InsufficientStockFailure`, `UnknownFailure`) with `Equatable`; matching sealed `AppException` hierarchy for the data layer; `Result<F extends Failure, S>` (Either-style, `Success`/`ResultFailure` variants) with `fold`/`map`/`flatMap`/`getOrElse`. |
+| 2.2 | UseCase base & pagination | 🟩 Complete | 2026-08-01 | `UseCase<Type, Params>` (callable-class, matches `05_ARCHITECTURE_GUIDELINES.md` §9 verbatim incl. the `Type` generic name) + `StreamUseCase<Type, Params>` added proactively for future realtime features (§18.4) + shared `NoParams`; `PaginatedResult<T>` with `hasNextPage`/`isEmpty`/`totalCount`. |
+| 2.3 | DI bootstrap | 🟩 Complete | 2026-08-01 | `get_it` singleton (`getIt`) + `injectable`-annotated `configureCoreInjection()`; `build_runner` codegen verified end-to-end (`injection_container.config.dart` generated and committed) registering `ConsoleAppLogger` and `AlwaysOnlineNetworkInfo` as lazy singletons. Every feature will follow this same `configure<Feature>Injection()` entry-point pattern. |
+| 2.4 | Logging & network_info | 🟩 Complete | 2026-08-01 | `AppLogger` abstraction + `ConsoleAppLogger` (`dart:developer`-backed, DevTools-visible) impl; `NetworkInfo` + `AlwaysOnlineNetworkInfo` default impl (real connectivity_plus-backed impl deferred to backend-integration phase per architecture doc §18); `ApiClient` defined as a contract only, no implementation (per plan). |
+| 2.5 | Shared entities & utils | 🟩 Complete | 2026-08-01 | `Money` (integer minor-units, currency-safe arithmetic/comparison operators) and `Address` in `shared_entities/`; `Validators` (email/phone/passwordStrength/required) and `Formatters` (currency via `intl` `simpleCurrency`, date/dateTime, compactNumber, percentage) in `utils/`. `core.dart` barrel updated to export the full public API. 57 unit tests added across `test/` (mirroring `lib/` 1:1); `melos run analyze`/`format`/`test` all pass clean workspace-wide. `avoid_types_as_parameter_names`/`one_member_abstracts` removed from the shared lint baseline (see inline `analysis_options.yaml` comment) - they fought the documented callable-class `UseCase` pattern. |
 
 ## Phase 3 — Environment & Configuration
 
@@ -273,5 +273,7 @@
 | Date | Change | Updated By |
 |---|---|---|
 | — | Document created; all 98 milestones initialized to ⬜ Pending pending plan approval | Planning Team |
+| 2026-08-01 | Phase 1 (Project Foundation) completed - milestones 1.1-1.4 | Engineering |
+| 2026-08-01 | Phase 2 (Core Architecture) completed - milestones 2.1-2.5 | Engineering |
 
 > Add a new row here every time this document is updated, in addition to updating the relevant milestone row above. This creates an audit trail independent of git history for quick project-status review.

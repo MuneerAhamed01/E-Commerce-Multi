@@ -39,7 +39,6 @@ linter:
     - avoid_returning_null_for_future
     - avoid_slow_async_io
     - avoid_type_to_string
-    - avoid_types_as_parameter_names
     - cancel_subscriptions
     - close_sinks
     - no_duplicate_case_values
@@ -67,6 +66,12 @@ linter:
     - avoid_shadowing_type_parameters
     - avoid_single_cascade_in_expression_statements
     - avoid_unused_constructor_parameters
+    # NOTE: `avoid_types_as_parameter_names` and `one_member_abstracts` are
+    # deliberately NOT enabled. This architecture's UseCase/repository
+    # contracts are single-method "callable class" abstracts by design
+    # (docs/05_ARCHITECTURE_GUIDELINES.md §9), and that section's canonical
+    # snippet names its generic parameter `Type` verbatim - both rules
+    # would fight the documented pattern on every feature going forward.
     - camel_case_types
     - constant_identifier_names
     - control_flow_in_finally
@@ -82,7 +87,6 @@ linter:
     - non_constant_identifier_names
     - null_closures
     - omit_local_variable_types
-    - one_member_abstracts
     - only_throw_errors
     - overridden_fields
     - package_names
