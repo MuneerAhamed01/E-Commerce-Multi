@@ -278,5 +278,6 @@
 | 2026-08-02 | Phase 3 (Environment & Configuration) completed - milestones 3.1-3.4 | Engineering |
 | 2026-08-02 | Phase 4 (Design System & Shared Widgets) completed - milestones 4.1-4.6 | Engineering |
 | 2026-08-02 | Added `.github/workflows/ci.yml` (format/analyze/test via FVM + Melos) — closes the Phase 1.4 "CI-ready scripts" gap (scripts existed; GitHub Actions did not) | Engineering |
+| 2026-08-02 | Git workflow: `main` (prod) + `develop` (integration) + `phase/<N>-*` per phase; hardened `.gitignore`/secret examples/Firebase placeholders; Dependabot + Gitleaks in CI | Engineering |
 
 > Add a new row here every time this document is updated, in addition to updating the relevant milestone row above. This creates an audit trail independent of git history for quick project-status review.

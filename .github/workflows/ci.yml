@@ -5,16 +5,33 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [main, develop, 'phase/**']
   pull_request:
+    branches: [main, develop]
 
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
+  secrets:
+    name: Secret scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # Blocks commits that accidentally include API keys, private keys, tokens.
+      - name: Gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   verify:
     name: Format · Analyze · Test
+    needs: secrets
     runs-on: ubuntu-latest
     timeout-minutes: 45
 

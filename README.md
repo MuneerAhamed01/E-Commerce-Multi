@@ -58,3 +58,29 @@ Read the full planning package in [`docs/`](docs/), starting with [`docs/01_IMPL
 ## Development Process
 
 Implementation proceeds strictly in the order defined in `docs/03_DEVELOPMENT_PHASES.md`, in small (2-6 hour) reviewable milestones. No feature's widgets, blocs, or repositories are written ahead of its own phase. `docs/14_IMPLEMENTATION_PROGRESS.md` is updated at the end of every milestone and is the source of truth for what has actually been built.
+
+## Git branching (dev vs production)
+
+| Branch | Role |
+|---|---|
+| `main` | **Production** — always releasable. Only receives merges from `develop` after a phase (or hotfix) is verified. |
+| `develop` | **Integration / day-to-day development**. Default base for all phase work. |
+| `phase/<N>-<short-name>` | **One branch per phase** (e.g. `phase/5-routing-foundation`). Branched from `develop`, merged back via PR when the phase is complete. |
+
+**Workflow for every new phase:**
+
+```bash
+git checkout develop
+git pull origin develop
+git checkout -b phase/5-routing-foundation
+# ... implement the phase ...
+git push -u origin HEAD
+# Open a PR: phase/5-routing-foundation → develop
+# After merge + smoke check, open/merge develop → main for production
+```
+
+**Rules:**
+- Do not commit directly to `main`.
+- Do not put secrets in git: only `config/env/{dev,staging,prod}.env` (non-secret) are committed. Real secrets use `*.secret.env` (gitignored) from the `*.secret.env.example` templates. Firebase credentials under `config/firebase/` are gitignored except `*.example.*`.
+- CI runs secret scanning (Gitleaks) before format/analyze/test on `main`, `develop`, and `phase/**`.
+- Prefer PRs into `develop`; keep commits focused and free of credentials, keystores, and local IDE junk.

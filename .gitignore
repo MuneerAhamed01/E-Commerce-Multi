@@ -1,5 +1,4 @@
-
-# FVM Version Cache
+# FVM Version Cache (SDK itself — keep .fvmrc committed)
 .fvm/
 
 # Dart / Flutter (workspace-root artifacts; each package has its own
@@ -10,12 +9,47 @@
 .flutter-plugins-dependencies
 build/
 coverage/
+*.lcov
 
 # IDE
 .idea/
+.vscode/
 *.iml
 *.ipr
 *.iws
+*.swp
+*.swo
 
 # OS
 .DS_Store
+Thumbs.db
+
+# --- Secrets & credentials (never commit real values) ---
+# Non-secret env files under config/env/{dev,staging,prod}.env ARE committed.
+# Anything named *.secret.env is gitignored; use the checked-in *.example.
+*.secret.env
+**/*.secret.env
+.env.local
+.env.*.local
+
+# Signing / keystores
+*.jks
+*.keystore
+*.p12
+*.p8
+*.pem
+*.mobileprovision
+key.properties
+**/android/key.properties
+
+# Firebase / Google real credentials (placeholders/examples stay tracked)
+**/google-services.json
+**/GoogleService-Info.plist
+config/firebase/**/firebase_options.dart
+!config/firebase/**/*.example.*
+!config/firebase/**/.gitkeep
+
+# Local tooling dumps
+*.log
+*.tmp
+.pub-cache/
