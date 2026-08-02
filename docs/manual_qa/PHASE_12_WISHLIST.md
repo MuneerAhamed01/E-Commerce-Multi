@@ -1,7 +1,7 @@
 # Phase 12 — Wishlist Manual Test Cases
 
 **Branch:** `phase/12-wishlist`  
-**PR:** _(filled after open)_  
+**PR:** [https://github.com/MuneerAhamed01/E-Commerce-Multi/pull/10](https://github.com/MuneerAhamed01/E-Commerce-Multi/pull/10)  
 
 **Base:** `phase/11-search` (stacked — merge to `develop` only after Phase 11 merges **and** every case below is `Pass` / justified `N/A`).
 
