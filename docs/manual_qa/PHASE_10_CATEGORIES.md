@@ -1,7 +1,7 @@
 # Phase 10 — Categories Manual Test Cases
 
 **Branch:** `phase/10-categories`  
-**PR:** _(filled after open)_  
+**PR:** [https://github.com/MuneerAhamed01/E-Commerce-Multi/pull/8](https://github.com/MuneerAhamed01/E-Commerce-Multi/pull/8)  
 
 **Base:** `phase/9-products` (stacked — merge to `develop` only after Phase 9 merges **and** every case below is `Pass` / justified `N/A`).
 
