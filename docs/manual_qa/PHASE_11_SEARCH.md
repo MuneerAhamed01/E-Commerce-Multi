@@ -1,7 +1,7 @@
 # Phase 11 — Search Manual Test Cases
 
 **Branch:** `phase/11-search`  
-**PR:** _(linked after open)_  
+**PR:** [https://github.com/MuneerAhamed01/E-Commerce-Multi/pull/9](https://github.com/MuneerAhamed01/E-Commerce-Multi/pull/9)  
 
 **Base:** `phase/10-categories` (stacked — merge to `develop` only after Phase 10 merges **and** every case below is `Pass` / justified `N/A`).
 
