@@ -8,7 +8,8 @@
 /// (Phase 2), DI bootstrap (Phase 2), logging/network contracts (Phase 2),
 /// shared entities/validators/formatters (Phase 2), configuration
 /// (`AppConfig`/`TenantConfig`/`FeatureFlags`, Phase 3), and routing
-/// guards (Phase 5) - see docs/03_DEVELOPMENT_PHASES.md.
+/// guards (Phase 5), and mock data infrastructure (Phase 6) - see
+/// docs/03_DEVELOPMENT_PHASES.md.
 library;
 
 export 'config/app_config.dart';
@@ -19,6 +20,7 @@ export 'error/exception.dart';
 export 'error/failure.dart';
 export 'error/result.dart';
 export 'logging/app_logger.dart';
+export 'mock/mock.dart';
 export 'network/api_client.dart';
 export 'network/network_info.dart';
 export 'pagination/paginated_result.dart';

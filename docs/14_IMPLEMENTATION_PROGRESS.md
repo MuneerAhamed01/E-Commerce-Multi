@@ -14,12 +14,12 @@
 |---|---|
 | Total Phases | 29 |
 | Total Milestones | 98 |
-| 🟩 Completed | 23 |
+| 🟩 Completed | 26 |
 | 🟨 In Progress | 0 |
-| ⬜ Pending | 75 |
-| **Overall Completion** | **23%** |
+| ⬜ Pending | 72 |
+| **Overall Completion** | **27%** |
 | Plan Approval Status | 🟩 Approved (implementation underway) |
-| Last Updated | 2026-08-02 (Phase 5 complete) |
+| Last Updated | 2026-08-02 (Phase 6 complete) |
 
 ---
 
@@ -75,9 +75,9 @@
 
 | ID | Milestone | Status | Completion Date | Notes |
 |---|---|---|---|---|
-| 6.1 | Mock data source pattern | ⬜ Pending | | |
-| 6.2 | Shared seed data set | ⬜ Pending | | |
-| 6.3 | Developer panel scaffold | ⬜ Pending | | |
+| 6.1 | Mock data source pattern | 🟩 Complete | 2026-08-02 | `MockNetworkSimulator`, `MockDataSourceMixin`, `MockDeveloperControls`, `configureMockInjection()` in `packages/core/lib/mock/`; reference ping stack under `mock/example/` (domain → mock DS → repo → use case). |
+| 6.2 | Shared seed data set | 🟩 Complete | 2026-08-02 | Canonical fixtures in `packages/core/lib/mock/fixtures/` (`SeedData`/`MockSeedStore`): ≥15 categories (3-level tree), 192 products, 26 users, 48 orders. Feature mocks import until ownership splits. |
+| 6.3 | Developer panel scaffold | 🟩 Complete | 2026-08-02 | `DeveloperPanelPage` + `PingCubit` in `design_system/lib/dev/`; wired to `/dev-panel` and `/admin/dev-panel` when `isDeveloperModeAvailable`; reset/latency/failure toggles + ping demo. |
 
 ## Phase 7 — Authentication
 
@@ -280,5 +280,6 @@
 | 2026-08-02 | Added `.github/workflows/ci.yml` (format/analyze/test via FVM + Melos) — closes the Phase 1.4 "CI-ready scripts" gap (scripts existed; GitHub Actions did not) | Engineering |
 | 2026-08-02 | Git workflow: `main` (prod) + `develop` (integration) + `phase/<N>-*` per phase; hardened `.gitignore`/secret examples/Firebase placeholders; Dependabot + Gitleaks in CI | Engineering |
 | 2026-08-02 | Phase 5 (Routing Foundation) completed - milestones 5.1-5.4 on branch `phase/5-routing-foundation` | Engineering |
+| 2026-08-02 | Phase 6 (Mock Data Infrastructure) completed - milestones 6.1-6.3 on branch `phase/6-mock-data-infrastructure` | Engineering |
 
 > Add a new row here every time this document is updated, in addition to updating the relevant milestone row above. This creates an audit trail independent of git history for quick project-status review.

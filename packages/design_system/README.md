@@ -6,7 +6,7 @@ White Label Commerce Platform. Consumed by both `apps/storefront` and
 
 See `docs/08_COMPONENT_LIBRARY.md` for the full component specification.
 
-## What's here (Phase 4)
+## What's here (through Phase 6)
 
 | Folder | Contents |
 |---|---|
@@ -16,6 +16,7 @@ See `docs/08_COMPONENT_LIBRARY.md` for the full component specification.
 | `layout/` | `ResponsiveLayoutBuilder` |
 | `state/` | `ListViewState<T>` sealed helper for loading/empty/error/loaded list UIs |
 | `gallery/` | Dev-only `DesignSystemGallery` (light/dark + two mock tenants) |
+| `dev/` | `DeveloperPanelPage` + `PingCubit` — mock latency/failure controls and the Phase 6 reference ping demo |
 
 Components are **theme-aware, not tenant-aware**: they read `Theme.of(context)` /
 `AppSemanticColors` only — never `TenantConfig` directly

@@ -90,11 +90,9 @@ GoRouter createStorefrontRouter({
         GoRoute(
           path: SystemRoutes.storefrontDevPanelPath,
           name: SystemRoutes.storefrontDevPanelName,
-          builder: (context, state) => PlaceholderPage(
-            title: 'Developer Panel',
-            subtitle:
-                'Full panel arrives in Phase 6. Tenant: ${tenantConfig.tenantId}, '
-                'env: ${appConfig.environment.name}.',
+          builder: (context, state) => DeveloperPanelPage(
+            appConfig: appConfig,
+            tenantConfig: tenantConfig,
           ),
         ),
       StatefulShellRoute.indexedStack(
