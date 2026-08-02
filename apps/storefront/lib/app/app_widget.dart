@@ -4,13 +4,14 @@ import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:wishlist/wishlist.dart';
 
 import 'app_router.dart';
 
 /// Root widget of the Storefront app.
 ///
-/// Provides the singleton [AuthBloc] and refreshes [GoRouter] redirects when
-/// the session changes (Phase 7).
+/// Provides singleton [AuthBloc] + [WishlistCubit] and refreshes [GoRouter]
+/// redirects when the session changes (Phase 7 / 12).
 class AppWidget extends StatefulWidget {
   const AppWidget({
     required this.appConfig,
@@ -27,6 +28,7 @@ class AppWidget extends StatefulWidget {
 
 class _AppWidgetState extends State<AppWidget> {
   late final AuthBloc _authBloc = getIt<AuthBloc>()..add(const AuthStarted());
+  late final WishlistCubit _wishlistCubit = getIt<WishlistCubit>();
   late final AuthSessionListenable _sessionListenable = AuthSessionListenable(
     _authBloc,
   );
@@ -40,14 +42,17 @@ class _AppWidgetState extends State<AppWidget> {
   @override
   void dispose() {
     _sessionListenable.dispose();
-    // AuthBloc is a DI lazySingleton — not disposed with the widget tree.
+    // AuthBloc / WishlistCubit are DI lazySingletons — not disposed here.
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<AuthBloc>.value(
-      value: _authBloc,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<AuthBloc>.value(value: _authBloc),
+        BlocProvider<WishlistCubit>.value(value: _wishlistCubit),
+      ],
       child: MaterialApp.router(
         title: widget.tenantConfig.displayName,
         debugShowCheckedModeBanner: false,

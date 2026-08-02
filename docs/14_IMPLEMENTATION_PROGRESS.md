@@ -128,8 +128,8 @@
 
 | ID | Milestone | Status | Completion Date | Notes |
 |---|---|---|---|---|
-| 12.1 | Wishlist domain/data | ⬜ Pending | | |
-| 12.2 | Wishlist presentation | ⬜ Pending | | |
+| 12.1 | Wishlist domain/data | 🟩 Complete | 2026-08-02 | `WishlistItem` + `WishlistRepository` → `MockWishlistRemoteDataSource` (SharedPreferences per user, demo seed for `user_cust_02`); use cases Add/Remove/Get/IsInWishlist; mock call types + Dev Panel reset; `configureWishlistInjection()`. |
+| 12.2 | Wishlist presentation | 🟩 Complete | 2026-08-02 | `WishlistCubit` lazy singleton; `WishlistScreen` `/wishlist`; `WishlistToggleButton`/`WishlistGrid`; storefront composes toggle into ProductCard/Detail via optional slots (no `products`→`wishlist` cycle); guest → Login return-to + pending flush. |
 
 ## Phase 13 — Cart
 

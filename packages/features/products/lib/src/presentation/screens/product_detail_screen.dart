@@ -22,12 +22,26 @@ class ProductDetailScreen extends StatelessWidget {
     required this.productId,
     this.detailBloc,
     this.reviewsCubit,
+    this.wishlistActionBuilder,
+    this.relatedWishlistActionBuilder,
     super.key,
   });
 
   final String productId;
   final ProductDetailBloc? detailBloc;
   final ReviewsCubit? reviewsCubit;
+
+  /// Optional wishlist control for the primary product (app shell composes).
+  final Widget Function(
+    BuildContext context,
+    Product product,
+    String? selectedVariantId,
+  )?
+  wishlistActionBuilder;
+
+  /// Optional wishlist control for related product cards.
+  final Widget Function(BuildContext context, Product product)?
+  relatedWishlistActionBuilder;
 
   @override
   Widget build(BuildContext context) {
@@ -43,13 +57,28 @@ class ProductDetailScreen extends StatelessWidget {
               (reviewsCubit ?? getIt<ReviewsCubit>())..load(productId),
         ),
       ],
-      child: const _ProductDetailView(),
+      child: _ProductDetailView(
+        wishlistActionBuilder: wishlistActionBuilder,
+        relatedWishlistActionBuilder: relatedWishlistActionBuilder,
+      ),
     );
   }
 }
 
 class _ProductDetailView extends StatelessWidget {
-  const _ProductDetailView();
+  const _ProductDetailView({
+    this.wishlistActionBuilder,
+    this.relatedWishlistActionBuilder,
+  });
+
+  final Widget Function(
+    BuildContext context,
+    Product product,
+    String? selectedVariantId,
+  )?
+  wishlistActionBuilder;
+  final Widget Function(BuildContext context, Product product)?
+  relatedWishlistActionBuilder;
 
   @override
   Widget build(BuildContext context) {
@@ -98,6 +127,8 @@ class _ProductDetailView extends StatelessWidget {
                 product: product,
                 selectedVariantId: selectedVariantId,
                 relatedProducts: relatedProducts,
+                wishlistActionBuilder: wishlistActionBuilder,
+                relatedWishlistActionBuilder: relatedWishlistActionBuilder,
               ),
           },
           bottomNavigationBar: state is ProductDetailLoaded
@@ -131,11 +162,21 @@ class _LoadedBody extends StatelessWidget {
     required this.product,
     required this.selectedVariantId,
     required this.relatedProducts,
+    this.wishlistActionBuilder,
+    this.relatedWishlistActionBuilder,
   });
 
   final Product product;
   final String selectedVariantId;
   final List<Product> relatedProducts;
+  final Widget Function(
+    BuildContext context,
+    Product product,
+    String? selectedVariantId,
+  )?
+  wishlistActionBuilder;
+  final Widget Function(BuildContext context, Product product)?
+  relatedWishlistActionBuilder;
 
   @override
   Widget build(BuildContext context) {
@@ -187,17 +228,13 @@ class _LoadedBody extends StatelessWidget {
         const SizedBox(height: AppSpacing.md),
         Align(
           alignment: Alignment.centerLeft,
-          child: TextButton.icon(
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Wishlist coming in a later phase'),
-                ),
-              );
-            },
-            icon: const Icon(Icons.favorite_border),
-            label: const Text('Wishlist'),
-          ),
+          child:
+              wishlistActionBuilder?.call(
+                context,
+                product,
+                selectedVariantId,
+              ) ??
+              const SizedBox.shrink(),
         ),
         if (relatedProducts.isNotEmpty) ...[
           const SizedBox(height: AppSpacing.xl),
@@ -217,6 +254,10 @@ class _LoadedBody extends StatelessWidget {
                     product: related,
                     onTap: () =>
                         context.push(ProductRoutes.detailPath(related.id)),
+                    wishlistAction: relatedWishlistActionBuilder?.call(
+                      context,
+                      related,
+                    ),
                   ),
                 );
               },

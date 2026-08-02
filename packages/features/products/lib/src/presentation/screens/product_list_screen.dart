@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../domain/entities/product.dart';
 import '../bloc/product_list_bloc.dart';
 import '../routing/product_routes.dart';
 import '../widgets/product_card.dart';
@@ -15,6 +16,7 @@ class ProductListScreen extends StatelessWidget {
     this.listBloc,
     this.title = 'Products',
     this.header,
+    this.wishlistActionBuilder,
     super.key,
   });
 
@@ -29,22 +31,36 @@ class ProductListScreen extends StatelessWidget {
   /// Optional chrome above the grid (e.g. category breadcrumb / chips).
   final Widget? header;
 
+  /// Optional per-card wishlist control (composed by the app shell).
+  final Widget Function(BuildContext context, Product product)?
+  wishlistActionBuilder;
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) =>
           (listBloc ?? getIt<ProductListBloc>())
             ..add(ProductListStarted(categoryId: categoryId)),
-      child: _ProductListView(title: title, header: header),
+      child: _ProductListView(
+        title: title,
+        header: header,
+        wishlistActionBuilder: wishlistActionBuilder,
+      ),
     );
   }
 }
 
 class _ProductListView extends StatefulWidget {
-  const _ProductListView({required this.title, this.header});
+  const _ProductListView({
+    required this.title,
+    this.header,
+    this.wishlistActionBuilder,
+  });
 
   final String title;
   final Widget? header;
+  final Widget Function(BuildContext context, Product product)?
+  wishlistActionBuilder;
 
   @override
   State<_ProductListView> createState() => _ProductListViewState();
@@ -189,6 +205,9 @@ class _ProductListViewState extends State<_ProductListView> {
                                               product.id,
                                             ),
                                           ),
+                                          wishlistAction: widget
+                                              .wishlistActionBuilder
+                                              ?.call(context, product),
                                         );
                                       }, childCount: products.length),
                                     ),
