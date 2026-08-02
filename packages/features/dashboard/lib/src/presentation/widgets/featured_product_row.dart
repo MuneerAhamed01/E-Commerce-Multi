@@ -9,11 +9,13 @@ class FeaturedProductRow extends StatelessWidget {
   const FeaturedProductRow({
     required this.products,
     required this.onProductTap,
+    this.onViewAllTap,
     super.key,
   });
 
   final List<FeaturedProduct> products;
   final ValueChanged<FeaturedProduct> onProductTap;
+  final VoidCallback? onViewAllTap;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,18 @@ class FeaturedProductRow extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Featured products', style: textTheme.titleMedium),
+        Row(
+          children: [
+            Expanded(
+              child: Text('Featured products', style: textTheme.titleMedium),
+            ),
+            if (onViewAllTap != null)
+              TextButton(
+                onPressed: onViewAllTap,
+                child: const Text('View all'),
+              ),
+          ],
+        ),
         const SizedBox(height: AppSpacing.md),
         SizedBox(
           height: 196,

@@ -6,6 +6,7 @@ import 'package:core/core.dart';
 import 'package:dashboard/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:products/products.dart';
 
 import 'app/app_widget.dart';
 
@@ -53,6 +54,8 @@ Future<void> bootstrap({
       await configureAuthenticationInjection();
       // Storefront home (Phase 8).
       configureDashboardInjection();
+      // Products catalog (Phase 9).
+      configureProductsInjection();
 
       FlutterError.onError = (details) {
         logger.error(

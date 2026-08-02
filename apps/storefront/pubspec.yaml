@@ -20,7 +20,8 @@ dependencies:
     sdk: flutter
   flutter_bloc: ^9.1.1
   go_router: ^17.3.0
-  # Additional customer feature packages: wired starting Phase 9+
+  products: ^0.1.0
+  # Additional customer feature packages: wired starting Phase 10+
   # (see docs/03_DEVELOPMENT_PHASES.md).
 
 dev_dependencies:

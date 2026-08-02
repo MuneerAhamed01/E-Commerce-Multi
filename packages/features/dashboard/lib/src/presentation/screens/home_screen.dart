@@ -25,6 +25,7 @@ class HomeScreen extends StatelessWidget {
   }
 
   static const String categoriesPath = '/categories';
+  static const String productsPath = '/products';
 
   static String productPath(String productId) => '/products/$productId';
 
@@ -106,6 +107,7 @@ class HomeScreen extends StatelessWidget {
                                 products: feed.featuredProducts,
                                 onProductTap: (product) =>
                                     _onProductTap(context, product),
+                                onViewAllTap: () => context.push(productsPath),
                               ),
                             ),
                             const SizedBox(height: AppSpacing.xl),
