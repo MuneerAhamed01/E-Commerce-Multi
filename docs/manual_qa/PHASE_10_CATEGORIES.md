@@ -10,7 +10,7 @@
 | Tester | |
 | Date | |
 | Platform(s) | e.g. macOS storefront / iOS simulator / Chrome |
-| Build / commit | tip of `phase/10-categories` |
+| Build / commit | `8c53d1e` (or later on this branch) |
 | Overall result | ⬜ Not started · 🟨 In progress · 🟩 Ready to merge |
 
 **How to mark results**
