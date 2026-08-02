@@ -8,6 +8,7 @@ import 'package:dashboard/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:products/products.dart';
+import 'package:search/search.dart';
 
 import 'app/app_widget.dart';
 
@@ -59,6 +60,8 @@ Future<void> bootstrap({
       configureProductsInjection();
       // Categories browse/detail (Phase 10).
       configureCategoriesInjection();
+      // Product search (Phase 11) — requires SharedPreferences from auth.
+      configureSearchInjection();
 
       FlutterError.onError = (details) {
         logger.error(

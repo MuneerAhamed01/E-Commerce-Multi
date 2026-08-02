@@ -1,13 +1,23 @@
-/// Query-driven product discovery with filters and sort, across the full catalog.
+/// Query-driven product discovery with filters and sort.
 ///
-/// Feature-first Clean Architecture package: `src/domain`, `src/data`, and
-/// `src/presentation` subtrees are added when this feature's implementation
-/// phase begins (Phase 11, see docs/03_DEVELOPMENT_PHASES.md and
-/// docs/04_FEATURE_IMPLEMENTATION_ORDER.md for the full specification).
-///
-/// Only symbols exported from this barrel file are a public contract other
-/// packages may depend on (see docs/02_PROJECT_STRUCTURE.md §6 and §11).
-///
-/// Nothing is exported yet - this is a Phase 1 (Project Foundation)
-/// placeholder so the package compiles as part of the monorepo.
+/// Only symbols exported here are a public contract other packages may depend
+/// on (docs/02_PROJECT_STRUCTURE.md §6 / §11).
 library;
+
+export 'src/domain/entities/search_filter.dart';
+export 'src/domain/entities/search_query.dart';
+export 'src/domain/entities/search_suggestion.dart';
+export 'src/domain/entities/sort_option.dart';
+export 'src/domain/repositories/recent_search_repository.dart';
+export 'src/domain/repositories/search_repository.dart';
+export 'src/domain/usecases/clear_recent_searches.dart';
+export 'src/domain/usecases/get_recent_searches.dart';
+export 'src/domain/usecases/get_search_suggestions.dart';
+export 'src/domain/usecases/save_recent_search.dart';
+export 'src/domain/usecases/search_products.dart';
+export 'src/injection/search_injection.dart';
+export 'src/presentation/bloc/search_bloc.dart';
+export 'src/presentation/bloc/search_results_bloc.dart';
+export 'src/presentation/routing/search_routes.dart';
+export 'src/presentation/screens/search_entry_screen.dart';
+export 'src/presentation/screens/search_results_screen.dart';

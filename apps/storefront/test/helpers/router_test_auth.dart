@@ -2,6 +2,7 @@ import 'package:authentication/authentication.dart';
 import 'package:categories/categories.dart';
 import 'package:core/core.dart';
 import 'package:products/products.dart';
+import 'package:search/search.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Minimal auth stack for storefront router widget tests.
@@ -64,6 +65,7 @@ final class RouterTestAuth {
     await configureAuthenticationInjection(preferences: prefs);
     configureProductsInjection();
     configureCategoriesInjection();
+    configureSearchInjection();
 
     final bloc = getIt<AuthBloc>()..add(const AuthStarted());
     await bloc.stream.firstWhere(

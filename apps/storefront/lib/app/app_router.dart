@@ -6,6 +6,7 @@ import 'package:design_system/design_system.dart';
 import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:products/products.dart';
+import 'package:search/search.dart';
 
 import 'placeholders/placeholder_page.dart';
 import 'routing/storefront_route_extras.dart';
@@ -182,10 +183,31 @@ GoRouter createStorefrontRouter({
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: '/search',
-                name: 'SearchRoute',
-                builder: (context, state) =>
-                    const PlaceholderPage(title: 'Search'),
+                path: SearchRoutes.entryPath,
+                name: SearchRoutes.entryName,
+                builder: (context, state) => const SearchEntryScreen(),
+                routes: [
+                  GoRoute(
+                    path: 'results',
+                    name: SearchRoutes.resultsName,
+                    builder: (context, state) {
+                      final query =
+                          state.uri.queryParameters[SearchRoutes.queryKey] ??
+                          '';
+                      final sortName =
+                          state.uri.queryParameters[SearchRoutes.sortKey];
+                      final sort = SortOption.values.firstWhere(
+                        (option) => option.name == sortName,
+                        orElse: () => SortOption.relevance,
+                      );
+                      return SearchResultsScreen(
+                        key: ValueKey('search-results-$query-${sort.name}'),
+                        query: query,
+                        initialSort: sort,
+                      );
+                    },
+                  ),
+                ],
               ),
             ],
           ),
