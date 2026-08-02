@@ -120,9 +120,9 @@
 
 | ID | Milestone | Status | Completion Date | Notes |
 |---|---|---|---|---|
-| 11.1 | Search domain/data | ⬜ Pending | | |
-| 11.2 | Search entry & suggestions | ⬜ Pending | | |
-| 11.3 | Results, filters, sort | ⬜ Pending | | |
+| 11.1 | Search domain/data | 🟩 Complete | 2026-08-02 | `SearchQuery`/`SearchFilter`/`SortOption` + suggestions; `SearchRepository` → mock over `MockSeedStore`; `RecentSearchRepository` (SharedPreferences); use cases SearchProducts/GetSearchSuggestions/GetRecentSearches/SaveRecentSearch/ClearRecentSearches; filter AND + debounce documented; `configureSearchInjection()`. |
+| 11.2 | Search entry & suggestions | 🟩 Complete | 2026-08-02 | `SearchBloc` + `SearchEntryScreen` with `AppSearchBar` (350ms debounce), recent chips, trending terms, suggestion tiles; route `/search` replaces shell placeholder. |
+| 11.3 | Results, filters, sort | 🟩 Complete | 2026-08-02 | `SearchResultsBloc` + screen with `ProductCard` grid, `AppFilterBottomSheet`/`AppSortBottomSheet`, `AppActiveFilterChipRow`, zero-results clear-filters CTA, pagination; route `/search/results?q=`; tap → `/products/:id`. |
 
 ## Phase 12 — Wishlist
 
