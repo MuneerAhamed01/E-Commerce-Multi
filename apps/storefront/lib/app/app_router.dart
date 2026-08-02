@@ -1,3 +1,4 @@
+import 'package:authentication/authentication.dart';
 import 'package:core/core.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/foundation.dart';
@@ -8,18 +9,19 @@ import 'routing/storefront_route_extras.dart';
 import 'shell/storefront_shell.dart';
 
 /// Builds the storefront [GoRouter] (docs/09_ROUTING_PLAN.md §2).
-///
-/// Feature packages will contribute their own `<feature>_routes.dart` lists
-/// in later phases; Phase 5 only wires the shell skeleton, auth-flow
-/// stubs, maintenance/404, and the optional developer panel.
 GoRouter createStorefrontRouter({
   required AppConfig appConfig,
   required TenantConfig tenantConfig,
+  AuthSessionState Function()? sessionOf,
+  Listenable? refreshListenable,
   AuthSessionState session = const AuthSessionState.guest(),
 }) {
+  AuthSessionState currentSession() => sessionOf?.call() ?? session;
+
   return GoRouter(
-    initialLocation: '/splash',
+    initialLocation: AuthRoutes.splashPath,
     debugLogDiagnostics: kDebugMode,
+    refreshListenable: refreshListenable,
     redirect: (context, state) {
       final name = state.topRoute?.name;
       final extras = name == null ? null : storefrontRouteExtras[name];
@@ -32,7 +34,7 @@ GoRouter createStorefrontRouter({
       if (access == RouteAccess.public &&
           !_isAlwaysPublic(name) &&
           !tenantConfig.allowGuestBrowsing &&
-          !session.isAuthenticated) {
+          !currentSession().isAuthenticated) {
         access = RouteAccess.authenticated;
       }
 
@@ -43,7 +45,7 @@ GoRouter createStorefrontRouter({
           access: access,
           appConfig: appConfig,
           tenantConfig: tenantConfig,
-          session: session,
+          session: currentSession(),
           requiredFeatureFlag: extras.requiredFeatureFlag,
           uri: state.uri,
         ),
@@ -54,30 +56,52 @@ GoRouter createStorefrontRouter({
     ),
     routes: [
       GoRoute(
-        path: '/splash',
-        name: 'SplashRoute',
-        redirect: (context, state) {
-          if (!tenantConfig.allowGuestBrowsing && !session.isAuthenticated) {
-            return SystemRoutes.storefrontLoginPath;
-          }
-          return SystemRoutes.storefrontHomePath;
+        path: AuthRoutes.splashPath,
+        name: AuthRoutes.splashName,
+        builder: (context, state) => const SplashScreen(isAdminApp: false),
+      ),
+      GoRoute(
+        path: AuthRoutes.onboardingPath,
+        name: AuthRoutes.onboardingName,
+        builder: (context, state) => const OnboardingScreen(),
+      ),
+      GoRoute(
+        path: AuthRoutes.loginPath,
+        name: AuthRoutes.loginName,
+        builder: (context, state) => const LoginScreen(),
+      ),
+      GoRoute(
+        path: AuthRoutes.registerPath,
+        name: AuthRoutes.registerName,
+        builder: (context, state) => const RegisterScreen(),
+      ),
+      GoRoute(
+        path: AuthRoutes.forgotPasswordPath,
+        name: AuthRoutes.forgotPasswordName,
+        builder: (context, state) => const ForgotPasswordScreen(),
+      ),
+      GoRoute(
+        path: AuthRoutes.verifyOtpPath,
+        name: AuthRoutes.verifyOtpName,
+        builder: (context, state) {
+          final email =
+              state.uri.queryParameters[AuthRoutes.emailQueryKey] ?? '';
+          final purposeName =
+              state.uri.queryParameters[AuthRoutes.purposeQueryKey];
+          final purpose = purposeName == OtpPurpose.registration.name
+              ? OtpPurpose.registration
+              : OtpPurpose.passwordReset;
+          return OtpVerificationScreen(email: email, purpose: purpose);
         },
       ),
       GoRoute(
-        path: SystemRoutes.storefrontLoginPath,
-        name: SystemRoutes.storefrontLoginName,
-        builder: (context, state) => const PlaceholderPage(
-          title: 'Login',
-          subtitle: 'Auth screens land in Phase 7.',
-        ),
-      ),
-      GoRoute(
-        path: '/register',
-        name: 'RegisterRoute',
-        builder: (context, state) => const PlaceholderPage(
-          title: 'Register',
-          subtitle: 'Auth screens land in Phase 7.',
-        ),
+        path: AuthRoutes.resetPasswordPath,
+        name: AuthRoutes.resetPasswordName,
+        builder: (context, state) {
+          final email =
+              state.uri.queryParameters[AuthRoutes.emailQueryKey] ?? '';
+          return ResetPasswordScreen(email: email);
+        },
       ),
       GoRoute(
         path: SystemRoutes.storefrontMaintenancePath,
@@ -162,9 +186,13 @@ GoRouter createStorefrontRouter({
 }
 
 bool _isAlwaysPublic(String? name) {
-  return name == 'SplashRoute' ||
-      name == SystemRoutes.storefrontLoginName ||
-      name == 'RegisterRoute' ||
+  return name == AuthRoutes.splashName ||
+      name == AuthRoutes.onboardingName ||
+      name == AuthRoutes.loginName ||
+      name == AuthRoutes.registerName ||
+      name == AuthRoutes.forgotPasswordName ||
+      name == AuthRoutes.verifyOtpName ||
+      name == AuthRoutes.resetPasswordName ||
       name == SystemRoutes.storefrontMaintenanceName ||
       name == SystemRoutes.storefrontDevPanelName;
 }

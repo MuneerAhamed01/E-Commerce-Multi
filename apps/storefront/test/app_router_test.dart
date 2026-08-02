@@ -1,80 +1,121 @@
+import 'package:authentication/authentication.dart';
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:storefront/app/app_router.dart';
 
-TenantConfig _tenant() {
-  return TenantConfig(
-    tenantId: 'default',
-    displayName: 'Test Store',
-    branding: const BrandingTokens(
-      primaryColorHex: '#2563EB',
-      secondaryColorHex: '#F97316',
-      logoAssetPath: 'assets/logo.png',
-    ),
-    copy: const CopyOverrides.empty(),
-    featureFlags: FeatureFlagSet.allEnabled(),
-    defaultLocale: 'en_US',
-    supportEmail: 'a@b.c',
-    allowGuestBrowsing: true,
-    allowGuestCart: true,
-  );
-}
+import 'helpers/router_test_auth.dart';
 
-AppConfig _config() {
-  return const AppConfig(
-    environment: Environment.dev,
-    dataSourceMode: DataSourceMode.mock,
-    logLevel: LogLevel.debug,
-    mockLatencyMin: Duration(milliseconds: 1),
-    mockLatencyMax: Duration(milliseconds: 2),
-    isDeveloperModeAvailable: true,
-  );
+Future<void> _pumpUntil(
+  WidgetTester tester,
+  bool Function() condition, {
+  int maxPumps = 60,
+}) async {
+  for (var i = 0; i < maxPumps; i++) {
+    await tester.pump(const Duration(milliseconds: 50));
+    if (condition()) {
+      return;
+    }
+  }
+  fail('Condition not met after $maxPumps pumps');
 }
 
 void main() {
-  testWidgets('splash redirects to home and shell shows Home', (tester) async {
+  late RouterTestAuth auth;
+
+  setUp(() async {
+    auth = await RouterTestAuth.create();
+  });
+
+  tearDown(() async {
+    await auth.dispose();
+  });
+
+  testWidgets('splash resolves guest with onboarding seen to login', (
+    tester,
+  ) async {
+    await auth.setOnboardingSeen();
     final router = createStorefrontRouter(
-      appConfig: _config(),
-      tenantConfig: _tenant(),
+      appConfig: auth.config,
+      tenantConfig: auth.tenant,
+      sessionOf: auth.sessionOf,
+      refreshListenable: auth.listenable,
     );
 
-    await tester.pumpWidget(MaterialApp.router(routerConfig: router));
-    await tester.pumpAndSettle();
+    await tester.pumpWidget(
+      BlocProvider<AuthBloc>.value(
+        value: auth.bloc,
+        child: MaterialApp.router(routerConfig: router),
+      ),
+    );
+    await _pumpUntil(
+      tester,
+      () => router.state.matchedLocation == SystemRoutes.storefrontLoginPath,
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 50));
 
-    expect(find.text('Home'), findsWidgets);
-    expect(router.state.matchedLocation, SystemRoutes.storefrontHomePath);
+    expect(router.state.matchedLocation, SystemRoutes.storefrontLoginPath);
+    expect(find.textContaining('Welcome back'), findsOneWidget);
   });
 
   testWidgets('unknown path shows 404 with go-home CTA', (tester) async {
+    await auth.setOnboardingSeen();
     final router = createStorefrontRouter(
-      appConfig: _config(),
-      tenantConfig: _tenant(),
+      appConfig: auth.config,
+      tenantConfig: auth.tenant,
+      sessionOf: auth.sessionOf,
+      refreshListenable: auth.listenable,
     );
 
-    await tester.pumpWidget(MaterialApp.router(routerConfig: router));
-    await tester.pumpAndSettle();
+    await tester.pumpWidget(
+      BlocProvider<AuthBloc>.value(
+        value: auth.bloc,
+        child: MaterialApp.router(routerConfig: router),
+      ),
+    );
+    await _pumpUntil(
+      tester,
+      () => router.state.matchedLocation == SystemRoutes.storefrontLoginPath,
+    );
 
     router.go('/this-route-does-not-exist');
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 100));
 
     expect(find.text('Page not found'), findsOneWidget);
     expect(find.text('Go home'), findsOneWidget);
   });
 
   testWidgets('wishlist redirects guests to login', (tester) async {
+    await auth.setOnboardingSeen();
     final router = createStorefrontRouter(
-      appConfig: _config(),
-      tenantConfig: _tenant(),
+      appConfig: auth.config,
+      tenantConfig: auth.tenant,
+      sessionOf: auth.sessionOf,
+      refreshListenable: auth.listenable,
     );
 
-    await tester.pumpWidget(MaterialApp.router(routerConfig: router));
-    await tester.pumpAndSettle();
+    await tester.pumpWidget(
+      BlocProvider<AuthBloc>.value(
+        value: auth.bloc,
+        child: MaterialApp.router(routerConfig: router),
+      ),
+    );
+    await _pumpUntil(
+      tester,
+      () => router.state.matchedLocation == SystemRoutes.storefrontLoginPath,
+    );
 
     router.go('/wishlist');
-    await tester.pumpAndSettle();
+    await _pumpUntil(
+      tester,
+      () => router.state.uri.toString().contains(
+        SystemRoutes.storefrontLoginPath,
+      ),
+    );
 
     expect(router.state.matchedLocation, SystemRoutes.storefrontLoginPath);
-    expect(find.text('Login'), findsWidgets);
   });
 }

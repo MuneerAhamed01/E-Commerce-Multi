@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:authentication/authentication.dart';
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -47,6 +48,8 @@ Future<void> bootstrap({
       // Mock infrastructure + reference ping stack (Phase 6). Requires
       // AppConfig to already be registered.
       configureMockInjection();
+      // Auth feature (Phase 7) — session/use cases/AuthBloc.
+      await configureAuthenticationInjection();
 
       FlutterError.onError = (details) {
         logger.error(
