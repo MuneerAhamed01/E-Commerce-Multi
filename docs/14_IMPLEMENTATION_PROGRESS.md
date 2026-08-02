@@ -14,12 +14,12 @@
 |---|---|
 | Total Phases | 29 |
 | Total Milestones | 98 |
-| 🟩 Completed | 32 |
+| 🟩 Completed | 36 |
 | 🟨 In Progress | 0 |
-| ⬜ Pending | 66 |
-| **Overall Completion** | **33%** |
+| ⬜ Pending | 62 |
+| **Overall Completion** | **37%** |
 | Plan Approval Status | 🟩 Approved (implementation underway) |
-| Last Updated | 2026-08-02 (Phase 7 complete) |
+| Last Updated | 2026-08-02 (Phase 8 complete) |
 
 ---
 
@@ -94,10 +94,10 @@
 
 | ID | Milestone | Status | Completion Date | Notes |
 |---|---|---|---|---|
-| 8.1 | Storefront home domain/data | ⬜ Pending | | |
-| 8.2 | Storefront home presentation | ⬜ Pending | | |
-| 8.3 | Admin dashboard domain/data | ⬜ Pending | | |
-| 8.4 | Admin dashboard presentation | ⬜ Pending | | |
+| 8.1 | Storefront home domain/data | 🟩 Complete | 2026-08-02 | `HomeFeed`/`HomeBanner`/featured VMs; `GetHomeFeed`; `HomeCatalogGateway`/`BannerSource` mock DS reading `MockSeedStore` + hardcoded banner seed (**deviation:** no cross-feature Product/Category/Marketing repos yet — those packages are stubs). |
+| 8.2 | Storefront home presentation | 🟩 Complete | 2026-08-02 | `HomeBloc` + `HomeScreen` with BannerCarousel / FeaturedCategoryRow / FeaturedProductRow; loading/empty/error; wired in storefront router; taps → `/categories` or `/products/:id` stub. |
+| 8.3 | Admin dashboard domain/data | 🟩 Complete | 2026-08-02 | `DashboardKpiSet`/`SalesTrendPoint`; `GetDashboardKpis`; mock aggregation from seed orders/products via simulator. |
+| 8.4 | Admin dashboard presentation | 🟩 Complete | 2026-08-02 | `AdminDashboardBloc` + screen with `AppKpiCard` + `AppLineChartCard`; loading/empty/error; wired in admin router + `configureAdminDashboardInjection()`. |
 
 ## Phase 9 — Products
 
@@ -284,5 +284,7 @@
 | 2026-08-02 | Phase 7 (Authentication) completed - milestones 7.1-7.6 on branch `phase/7-authentication` | Engineering |
 | 2026-08-02 | Merge to `develop` gated on `docs/manual_qa/PHASE_07_AUTHENTICATION.md` (all cases Pass) | Engineering |
 | 2026-08-02 | Introduced `docs/manual_qa/` phase checklists; from Phase 7+, Pass required before merge to `develop` | Engineering |
+| 2026-08-02 | Phase 8 (Dashboard / Home) completed - milestones 8.1-8.4 on branch `phase/8-dashboard-home` | Engineering |
+| 2026-08-02 | Merge to `develop` gated on `docs/manual_qa/PHASE_08_DASHBOARD_HOME.md` (all cases Pass) | Engineering |
 
 > Add a new row here every time this document is updated, in addition to updating the relevant milestone row above. This creates an audit trail independent of git history for quick project-status review.

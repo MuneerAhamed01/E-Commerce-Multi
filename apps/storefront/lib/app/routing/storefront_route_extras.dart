@@ -25,6 +25,7 @@ const storefrontRouteExtras = <String, StorefrontRouteExtras>{
   ),
   'HomeRoute': StorefrontRouteExtras(access: RouteAccess.public),
   'CategoryBrowseRoute': StorefrontRouteExtras(access: RouteAccess.public),
+  'ProductDetailRoute': StorefrontRouteExtras(access: RouteAccess.public),
   'SearchRoute': StorefrontRouteExtras(access: RouteAccess.public),
   'WishlistRoute': StorefrontRouteExtras(
     access: RouteAccess.authenticated,

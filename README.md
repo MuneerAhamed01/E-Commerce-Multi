@@ -4,7 +4,7 @@
 
 Production-ready, multi-tenant, white-label e-commerce platform: Flutter Mobile + Flutter Web storefront, and a Flutter Admin Panel, built on Clean Architecture with Firebase-ready data contracts.
 
-**Status: Phase 7 (Authentication) complete** on branch `phase/7-authentication`. Full auth journey (splash/onboarding/login/register/forgot-password/OTP), mock session persistence, and live route-guard integration for storefront + admin. See `docs/14_IMPLEMENTATION_PROGRESS.md` for live milestone status.
+**Status: Phase 8 (Dashboard / Home) complete** on branch `phase/8-dashboard-home`. Storefront Home (banners, featured categories/products) and Admin Dashboard KPI shell wired to mock aggregation; auth from Phase 7 unchanged. See `docs/14_IMPLEMENTATION_PROGRESS.md` for live milestone status.
 
 ## Getting Started — how to run
 
@@ -63,16 +63,16 @@ fvm flutter run -t lib/main_dev.dart \
 
 Admin is primarily a **web** surface; Chrome/macOS/Windows/Linux are supported.
 
-### 5. Demo login (Phase 7 — mock auth)
+### 5. Demo login (mock auth) → Home / Dashboard
 
-Auth is **mock** (not Firebase). Use:
+Auth and catalog feeds are **mock** (not Firebase). Use:
 
-| App | Email | Password |
-|---|---|---|
-| Storefront | `noah.patel02@example.com` | `Password123!` |
-| Admin | `admin@example.com` | `Password123!` |
+| App | Email | Password | Lands on |
+|---|---|---|---|
+| Storefront | `noah.patel02@example.com` | `Password123!` | **Home** (banners + featured rows) |
+| Admin | `admin@example.com` | `Password123!` | **Dashboard** (KPI cards + sales trend) |
 
-Mock OTP: `123456`. Full scenarios: [`docs/manual_qa/PHASE_07_AUTHENTICATION.md`](docs/manual_qa/PHASE_07_AUTHENTICATION.md).
+Mock OTP: `123456`. Manual QA: [`docs/manual_qa/PHASE_08_DASHBOARD_HOME.md`](docs/manual_qa/PHASE_08_DASHBOARD_HOME.md) (Phase 7 auth: [`PHASE_07_AUTHENTICATION.md`](docs/manual_qa/PHASE_07_AUTHENTICATION.md)).
 
 ### 6. Quality checks (CI mirrors these)
 
