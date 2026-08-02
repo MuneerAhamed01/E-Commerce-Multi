@@ -1,7 +1,7 @@
 # Phase 13 — Cart Manual Test Cases
 
 **Branch:** `phase/13-cart`  
-**PR:** _(filled after open)_  
+**PR:** [https://github.com/MuneerAhamed01/E-Commerce-Multi/pull/11](https://github.com/MuneerAhamed01/E-Commerce-Multi/pull/11)  
 
 **Base:** `phase/12-wishlist` (stacked — merge to `develop` only after Phase 12 merges **and** every case below is `Pass` / justified `N/A`).
 
