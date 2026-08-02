@@ -4,7 +4,7 @@
 
 Production-ready, multi-tenant, white-label e-commerce platform: Flutter Mobile + Flutter Web storefront, and a Flutter Admin Panel, built on Clean Architecture with Firebase-ready data contracts.
 
-**Status: Phase 8 (Dashboard / Home) complete** on branch `phase/8-dashboard-home`. Storefront Home (banners, featured categories/products) and Admin Dashboard KPI shell wired to mock aggregation; auth from Phase 7 unchanged. See `docs/14_IMPLEMENTATION_PROGRESS.md` for live milestone status.
+**Status: Phase 9 (Products) complete** on branch `phase/9-products` (stacked on Phase 8). Storefront catalog listing/detail/reviews on mock seed data; Home “View all” → `/products`. Merge to `develop` only after Phase 8 merges and Phase 9 manual QA Pass. See `docs/14_IMPLEMENTATION_PROGRESS.md` for live milestone status.
 
 ## Getting Started — how to run
 

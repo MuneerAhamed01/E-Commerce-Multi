@@ -14,12 +14,12 @@
 |---|---|
 | Total Phases | 29 |
 | Total Milestones | 98 |
-| 🟩 Completed | 36 |
+| 🟩 Completed | 41 |
 | 🟨 In Progress | 0 |
-| ⬜ Pending | 62 |
-| **Overall Completion** | **37%** |
+| ⬜ Pending | 57 |
+| **Overall Completion** | **42%** |
 | Plan Approval Status | 🟩 Approved (implementation underway) |
-| Last Updated | 2026-08-02 (Phase 8 complete) |
+| Last Updated | 2026-08-02 (Phase 9 complete) |
 
 ---
 
@@ -103,11 +103,11 @@
 
 | ID | Milestone | Status | Completion Date | Notes |
 |---|---|---|---|---|
-| 9.1 | Products domain layer | ⬜ Pending | | |
-| 9.2 | Products data layer (mock) | ⬜ Pending | | |
-| 9.3 | Product listing | ⬜ Pending | | |
-| 9.4 | Product detail | ⬜ Pending | | |
-| 9.5 | Reviews | ⬜ Pending | | |
+| 9.1 | Products domain layer | 🟩 Complete | 2026-08-02 | `Product`/`ProductVariant`/`ProductImage`/`Review` + filter/page request; `ProductRepository`; use cases GetProducts/GetProductDetail/GetRelatedProducts/GetProductReviews/SubmitProductReview. |
+| 9.2 | Products data layer (mock) | 🟩 Complete | 2026-08-02 | `MockProductsRemoteDataSource` maps 192 `SeedProduct`s → entities; synthesizes Default+alt or size/color variants + deterministic reviews; in-memory submit + `MockDeveloperControls` reset; `configureProductsInjection()`. |
+| 9.3 | Product listing | 🟩 Complete | 2026-08-02 | `ProductListBloc` cursor pagination (~20) + category filter; `ProductCard`/`ProductGrid`; `ProductListScreen` skeleton/empty/error/load-more; route `/products` (+ `?categoryId=`). |
+| 9.4 | Product detail | 🟩 Complete | 2026-08-02 | `ProductDetailBloc` + gallery/variant selector; OOS selectable but blocks add-to-cart; Add to cart → “Coming soon”; related products navigate; route `/products/:productId` replaces stub. |
+| 9.5 | Reviews | 🟩 Complete | 2026-08-02 | `ReviewsCubit` + RatingSummary/ReviewList/ReviewSubmissionForm; guest → Login with return redirect; submit updates list in-session. |
 
 ## Phase 10 — Categories
 

@@ -4,6 +4,7 @@ import 'package:dashboard/dashboard.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
+import 'package:products/products.dart';
 
 import 'placeholders/placeholder_page.dart';
 import 'routing/storefront_route_extras.dart';
@@ -121,14 +122,20 @@ GoRouter createStorefrontRouter({
           ),
         ),
       GoRoute(
+        path: ProductRoutes.listPath,
+        name: ProductRoutes.listName,
+        builder: (context, state) {
+          final categoryId =
+              state.uri.queryParameters[ProductRoutes.categoryIdQueryKey];
+          return ProductListScreen(categoryId: categoryId);
+        },
+      ),
+      GoRoute(
         path: '/products/:productId',
-        name: 'ProductDetailRoute',
+        name: ProductRoutes.detailName,
         builder: (context, state) {
           final productId = state.pathParameters['productId'] ?? '';
-          return PlaceholderPage(
-            title: 'Product',
-            subtitle: productId.isEmpty ? null : productId,
-          );
+          return ProductDetailScreen(productId: productId);
         },
       ),
       StatefulShellRoute.indexedStack(
