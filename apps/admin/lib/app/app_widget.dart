@@ -1,87 +1,46 @@
 import 'package:core/core.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
+import 'app_router.dart';
 
 /// Root widget of the Admin Panel app.
 ///
-/// Phase 4 wires [AppTheme] from [TenantConfig]. When developer mode is
-/// available the home screen is the shared [DesignSystemGallery] so the
-/// Phase 4 completion criterion (light/dark + two tenants) is reachable
-/// without a dedicated route yet. Phase 5 replaces this with
-/// `MaterialApp.router` (role-aware side nav arrives in Phase 21).
-class AppWidget extends StatelessWidget {
+/// Phase 5: [MaterialApp.router] driven by [createAdminRouter]. Session is
+/// guest until Phase 21 wires admin auth — shell destinations therefore
+/// redirect to `/admin/login` via [RouteGuard].
+class AppWidget extends StatefulWidget {
   const AppWidget({
     required this.appConfig,
     required this.tenantConfig,
+    this.session = const AuthSessionState.guest(),
     super.key,
   });
 
-  /// Resolved once at bootstrap by the active `main_<flavor>.dart` entry
-  /// point - see docs/11_ENVIRONMENT_CONFIGURATION.md §10.
   final AppConfig appConfig;
-
-  /// Loaded once at bootstrap from `config/tenants/<tenantId>_tenant.json`.
   final TenantConfig tenantConfig;
+  final AuthSessionState session;
+
+  @override
+  State<AppWidget> createState() => _AppWidgetState();
+}
+
+class _AppWidgetState extends State<AppWidget> {
+  late final GoRouter _router = createAdminRouter(
+    appConfig: widget.appConfig,
+    tenantConfig: widget.tenantConfig,
+    session: widget.session,
+  );
 
   @override
   Widget build(BuildContext context) {
-    if (appConfig.isDeveloperModeAvailable) {
-      return const DesignSystemGallery();
-    }
-
-    return MaterialApp(
-      title: '${tenantConfig.displayName} Admin',
+    return MaterialApp.router(
+      title: '${widget.tenantConfig.displayName} Admin',
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.light(tenantConfig),
-      darkTheme: AppTheme.dark(tenantConfig),
-      home: Builder(
-        builder: (context) {
-          return Scaffold(
-            appBar: AppTopBar(title: '${tenantConfig.displayName} Admin'),
-            body: Center(
-              child: Padding(
-                padding: const EdgeInsets.all(AppSpacing.md),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      tenantConfig.displayName,
-                      style: Theme.of(context).textTheme.headlineSmall,
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: AppSpacing.sm),
-                    Text(
-                      'Admin Panel',
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                    const SizedBox(height: AppSpacing.lg),
-                    Text('Environment: ${appConfig.environment.name}'),
-                    Text('Tenant: ${tenantConfig.tenantId}'),
-                    Text('Data source: ${appConfig.dataSourceMode.name}'),
-                    const SizedBox(height: AppSpacing.sm),
-                    Text(
-                      'Phase 4: Design System wired.\n'
-                      'Real routing arrives in Phase 5.',
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                    if (tenantConfig.featureFlags.isEnabled(
-                      FeatureFlag.support,
-                    )) ...[
-                      const SizedBox(height: AppSpacing.md),
-                      AppButton(
-                        label: 'Support Center (feature-flagged)',
-                        variant: AppButtonVariant.outline,
-                        onPressed: () {},
-                      ),
-                    ],
-                  ],
-                ),
-              ),
-            ),
-          );
-        },
-      ),
+      theme: AppTheme.light(widget.tenantConfig),
+      darkTheme: AppTheme.dark(widget.tenantConfig),
+      routerConfig: _router,
     );
   }
 }

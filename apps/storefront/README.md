@@ -20,5 +20,7 @@ source of truth for tenant JSON files - see `bootstrap.dart` and
 `docs/11_ENVIRONMENT_CONFIGURATION.md` §6); don't replace it with a real
 directory.
 
-Currently a Phase 3 (Environment & Configuration) placeholder - see
+Phase 5 routing is live: `lib/app/app_router.dart` owns the `go_router`
+tree (shell + auth stubs + guards). Feature screens are still placeholders
+until their owning feature packages land — see
 `docs/03_DEVELOPMENT_PHASES.md`.

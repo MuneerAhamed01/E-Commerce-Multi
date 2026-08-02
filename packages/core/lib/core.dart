@@ -6,9 +6,9 @@
 ///
 /// Covers error handling (Phase 2), use case/pagination contracts
 /// (Phase 2), DI bootstrap (Phase 2), logging/network contracts (Phase 2),
-/// shared entities/validators/formatters (Phase 2), and configuration
-/// (`AppConfig`/`TenantConfig`/`FeatureFlags`, added in Phase 3) - see
-/// docs/03_DEVELOPMENT_PHASES.md.
+/// shared entities/validators/formatters (Phase 2), configuration
+/// (`AppConfig`/`TenantConfig`/`FeatureFlags`, Phase 3), and routing
+/// guards (Phase 5) - see docs/03_DEVELOPMENT_PHASES.md.
 library;
 
 export 'config/app_config.dart';
@@ -22,6 +22,10 @@ export 'logging/app_logger.dart';
 export 'network/api_client.dart';
 export 'network/network_info.dart';
 export 'pagination/paginated_result.dart';
+export 'routing/admin_permission.dart';
+export 'routing/auth_session_state.dart';
+export 'routing/route_guard.dart';
+export 'routing/system_routes.dart';
 export 'shared_entities/address.dart';
 export 'shared_entities/money.dart';
 export 'usecase/usecase.dart';

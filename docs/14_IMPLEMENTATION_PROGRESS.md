@@ -14,12 +14,12 @@
 |---|---|
 | Total Phases | 29 |
 | Total Milestones | 98 |
-| 🟩 Completed | 19 |
+| 🟩 Completed | 23 |
 | 🟨 In Progress | 0 |
-| ⬜ Pending | 79 |
-| **Overall Completion** | **19%** |
+| ⬜ Pending | 75 |
+| **Overall Completion** | **23%** |
 | Plan Approval Status | 🟩 Approved (implementation underway) |
-| Last Updated | 2026-08-02 (Phase 4 complete) |
+| Last Updated | 2026-08-02 (Phase 5 complete) |
 
 ---
 
@@ -66,10 +66,10 @@
 
 | ID | Milestone | Status | Completion Date | Notes |
 |---|---|---|---|---|
-| 5.1 | Storefront router skeleton | ⬜ Pending | | |
-| 5.2 | Admin router skeleton | ⬜ Pending | | |
-| 5.3 | Shared guard utilities | ⬜ Pending | | |
-| 5.4 | 404 / error / maintenance routes | ⬜ Pending | | |
+| 5.1 | Storefront router skeleton | 🟩 Complete | 2026-08-02 | `createStorefrontRouter` with splash→home, auth-flow stubs, `StatefulShellRoute` (Home/Categories/Search/Wishlist/Profile) + `AppBottomNavBar` shell; `go_router` wired into `AppWidget` via `MaterialApp.router`. Guest wishlist → login redirect verified. |
+| 5.2 | Admin router skeleton | 🟩 Complete | 2026-08-02 | `createAdminRouter` with login + `StatefulShellRoute` (Dashboard/Catalog/Orders/Customers/Marketing/Tenant/Settings) + `AppSideNav` shell; guest sessions redirect shell destinations to `/admin/login`. |
+| 5.3 | Shared guard utilities | 🟩 Complete | 2026-08-02 | Pure-Dart `packages/core/lib/routing/`: `RouteGuard` (maintenance → auth → permission → feature-flag → auth-flow bounce), `AuthSessionState`, `AdminPermission`, `SystemRoutes`. No `go_router` dependency in `core`. |
+| 5.4 | 404 / error / maintenance routes | 🟩 Complete | 2026-08-02 | `AppNotFoundScreen`, `AppMaintenanceScreen`, `AppAccessDeniedScreen` in `design_system`; both routers use `errorBuilder` + maintenance routes. Widget tests cover 404/login redirects. |
 
 ## Phase 6 — Mock Data Infrastructure
 
@@ -279,5 +279,6 @@
 | 2026-08-02 | Phase 4 (Design System & Shared Widgets) completed - milestones 4.1-4.6 | Engineering |
 | 2026-08-02 | Added `.github/workflows/ci.yml` (format/analyze/test via FVM + Melos) — closes the Phase 1.4 "CI-ready scripts" gap (scripts existed; GitHub Actions did not) | Engineering |
 | 2026-08-02 | Git workflow: `main` (prod) + `develop` (integration) + `phase/<N>-*` per phase; hardened `.gitignore`/secret examples/Firebase placeholders; Dependabot + Gitleaks in CI | Engineering |
+| 2026-08-02 | Phase 5 (Routing Foundation) completed - milestones 5.1-5.4 on branch `phase/5-routing-foundation` | Engineering |
 
 > Add a new row here every time this document is updated, in addition to updating the relevant milestone row above. This creates an audit trail independent of git history for quick project-status review.
