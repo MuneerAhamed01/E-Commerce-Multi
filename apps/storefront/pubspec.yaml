@@ -13,6 +13,7 @@ environment:
 
 dependencies:
   authentication: ^0.1.0
+  categories: ^0.1.0
   core: ^0.1.0
   dashboard: ^0.1.0
   design_system: ^0.1.0
@@ -21,7 +22,7 @@ dependencies:
   flutter_bloc: ^9.1.1
   go_router: ^17.3.0
   products: ^0.1.0
-  # Additional customer feature packages: wired starting Phase 10+
+  # Additional customer feature packages: wired starting Phase 11+
   # (see docs/03_DEVELOPMENT_PHASES.md).
 
 dev_dependencies:

@@ -1,13 +1,20 @@
 /// Structured, hierarchical browsing entry point into Products.
 ///
-/// Feature-first Clean Architecture package: `src/domain`, `src/data`, and
-/// `src/presentation` subtrees are added when this feature's implementation
-/// phase begins (Phase 10, see docs/03_DEVELOPMENT_PHASES.md and
-/// docs/04_FEATURE_IMPLEMENTATION_ORDER.md for the full specification).
-///
-/// Only symbols exported from this barrel file are a public contract other
-/// packages may depend on (see docs/02_PROJECT_STRUCTURE.md §6 and §11).
-///
-/// Nothing is exported yet - this is a Phase 1 (Project Foundation)
-/// placeholder so the package compiles as part of the monorepo.
+/// Only symbols exported here are a public contract other packages may depend
+/// on (docs/02_PROJECT_STRUCTURE.md §6 / §11).
 library;
+
+export 'src/domain/entities/category.dart';
+export 'src/domain/entities/category_detail.dart';
+export 'src/domain/repositories/category_repository.dart';
+export 'src/domain/usecases/get_category_detail.dart';
+export 'src/domain/usecases/get_category_tree.dart';
+export 'src/injection/categories_injection.dart';
+export 'src/presentation/cubit/category_detail_cubit.dart';
+export 'src/presentation/cubit/category_tree_cubit.dart';
+export 'src/presentation/routing/category_routes.dart';
+export 'src/presentation/screens/category_browse_screen.dart';
+export 'src/presentation/screens/category_detail_screen.dart';
+export 'src/presentation/widgets/category_breadcrumb.dart';
+export 'src/presentation/widgets/category_grid_tile.dart';
+export 'src/presentation/widgets/subcategory_chip_row.dart';

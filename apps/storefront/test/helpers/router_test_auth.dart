@@ -1,4 +1,5 @@
 import 'package:authentication/authentication.dart';
+import 'package:categories/categories.dart';
 import 'package:core/core.dart';
 import 'package:products/products.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -62,6 +63,7 @@ final class RouterTestAuth {
     getIt<MockDeveloperControls>().latencyDisabled = true;
     await configureAuthenticationInjection(preferences: prefs);
     configureProductsInjection();
+    configureCategoriesInjection();
 
     final bloc = getIt<AuthBloc>()..add(const AuthStarted());
     await bloc.stream.firstWhere(
