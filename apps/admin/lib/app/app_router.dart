@@ -67,10 +67,10 @@ GoRouter createAdminRouter({
         GoRoute(
           path: SystemRoutes.adminDevPanelPath,
           name: SystemRoutes.adminDevPanelName,
-          builder: (context, state) => PlaceholderPage(
+          builder: (context, state) => DeveloperPanelPage(
+            appConfig: appConfig,
+            tenantConfig: tenantConfig,
             title: 'Admin Developer Panel',
-            subtitle:
-                'Full panel arrives in Phase 6. Tenant: ${tenantConfig.tenantId}.',
           ),
         ),
       StatefulShellRoute.indexedStack(

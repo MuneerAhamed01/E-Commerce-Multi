@@ -44,6 +44,9 @@ Future<void> bootstrap({
       getIt.registerSingleton<FeatureFlagService>(
         FeatureFlagService(flags: tenantConfig.featureFlags),
       );
+      // Mock infrastructure + reference ping stack (Phase 6). Requires
+      // AppConfig to already be registered.
+      configureMockInjection();
 
       FlutterError.onError = (details) {
         logger.error(
