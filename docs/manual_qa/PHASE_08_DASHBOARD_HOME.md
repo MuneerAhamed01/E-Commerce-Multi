@@ -9,7 +9,7 @@
 | Tester | |
 | Date | |
 | Platform(s) | e.g. macOS storefront / Chrome admin / iOS simulator |
-| Build / commit | _(fill after push)_ |
+| Build / commit | `e55d41e` |
 | Overall result | ⬜ Not started · 🟨 In progress · 🟩 Ready to merge |
 
 **How to mark results**
