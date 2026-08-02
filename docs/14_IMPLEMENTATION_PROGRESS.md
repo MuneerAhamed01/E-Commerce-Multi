@@ -282,5 +282,7 @@
 | 2026-08-02 | Phase 5 (Routing Foundation) completed - milestones 5.1-5.4 on branch `phase/5-routing-foundation` | Engineering |
 | 2026-08-02 | Phase 6 (Mock Data Infrastructure) completed - milestones 6.1-6.3 on branch `phase/6-mock-data-infrastructure` | Engineering |
 | 2026-08-02 | Phase 7 (Authentication) completed - milestones 7.1-7.6 on branch `phase/7-authentication` | Engineering |
+| 2026-08-02 | Merge to `develop` gated on `docs/manual_qa/PHASE_07_AUTHENTICATION.md` (all cases Pass) | Engineering |
+| 2026-08-02 | Introduced `docs/manual_qa/` phase checklists; from Phase 7+, Pass required before merge to `develop` | Engineering |
 
 > Add a new row here every time this document is updated, in addition to updating the relevant milestone row above. This creates an audit trail independent of git history for quick project-status review.
