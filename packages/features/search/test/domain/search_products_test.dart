@@ -38,10 +38,7 @@ void main() {
 
   test('SearchProducts paginates large result sets', () async {
     final result = await harness.searchProducts(
-      const SearchProductsParams(
-        query: '',
-        page: ProductPageRequest(),
-      ),
+      const SearchProductsParams(query: '', page: ProductPageRequest()),
     );
     final page = result.valueOrNull!;
     expect(page.items.length, 20);

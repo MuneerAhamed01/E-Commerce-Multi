@@ -23,52 +23,58 @@ void main() {
     await bloc.close();
   });
 
-  test('SearchQueryChanged loads suggestions after presentation debounce', () async {
-    final bloc = harness.createSearchBloc();
-    final token = harness.store.products.first.name.split(' ').first;
+  test(
+    'SearchQueryChanged loads suggestions after presentation debounce',
+    () async {
+      final bloc = harness.createSearchBloc();
+      final token = harness.store.products.first.name.split(' ').first;
 
-    bloc.add(const SearchStarted());
-    await bloc.stream.firstWhere((s) => s is SearchEntryLoaded);
+      bloc.add(const SearchStarted());
+      await bloc.stream.firstWhere((s) => s is SearchEntryLoaded);
 
-    bloc.add(SearchQueryChanged(token));
-    await expectLater(
-      bloc.stream,
-      emitsInOrder([
-        isA<SearchEntryLoaded>().having(
-          (s) => s.isSuggesting,
-          'loading',
-          isTrue,
-        ),
-        isA<SearchEntryLoaded>()
-            .having((s) => s.isSuggesting, 'done', isFalse)
-            .having((s) => s.suggestions, 'suggestions', isNotEmpty),
-      ]),
-    );
-    await bloc.close();
-  });
+      bloc.add(SearchQueryChanged(token));
+      await expectLater(
+        bloc.stream,
+        emitsInOrder([
+          isA<SearchEntryLoaded>().having(
+            (s) => s.isSuggesting,
+            'loading',
+            isTrue,
+          ),
+          isA<SearchEntryLoaded>()
+              .having((s) => s.isSuggesting, 'done', isFalse)
+              .having((s) => s.suggestions, 'suggestions', isNotEmpty),
+        ]),
+      );
+      await bloc.close();
+    },
+  );
 
-  test('SearchSubmitted emits navigate then restores entry with recent', () async {
-    final bloc = harness.createSearchBloc();
-    bloc.add(const SearchStarted());
-    await bloc.stream.firstWhere((s) => s is SearchEntryLoaded);
+  test(
+    'SearchSubmitted emits navigate then restores entry with recent',
+    () async {
+      final bloc = harness.createSearchBloc();
+      bloc.add(const SearchStarted());
+      await bloc.stream.firstWhere((s) => s is SearchEntryLoaded);
 
-    bloc.add(const SearchSubmitted('classic'));
-    await expectLater(
-      bloc.stream,
-      emitsInOrder([
-        isA<SearchEntryLoaded>().having(
-          (s) => s.recentSearches,
-          'recent before nav',
-          contains('classic'),
-        ),
-        isA<SearchNavigateToResults>().having((s) => s.query, 'q', 'classic'),
-        isA<SearchEntryLoaded>().having(
-          (s) => s.recentSearches.first,
-          'recent after',
-          'classic',
-        ),
-      ]),
-    );
-    await bloc.close();
-  });
+      bloc.add(const SearchSubmitted('classic'));
+      await expectLater(
+        bloc.stream,
+        emitsInOrder([
+          isA<SearchEntryLoaded>().having(
+            (s) => s.recentSearches,
+            'recent before nav',
+            contains('classic'),
+          ),
+          isA<SearchNavigateToResults>().having((s) => s.query, 'q', 'classic'),
+          isA<SearchEntryLoaded>().having(
+            (s) => s.recentSearches.first,
+            'recent after',
+            'classic',
+          ),
+        ]),
+      );
+      await bloc.close();
+    },
+  );
 }
