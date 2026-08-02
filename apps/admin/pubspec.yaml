@@ -12,6 +12,7 @@ environment:
   flutter: ">=3.44.0"
 
 dependencies:
+  admin_dashboard: ^0.1.0
   authentication: ^0.1.0
   core: ^0.1.0
   design_system: ^0.1.0

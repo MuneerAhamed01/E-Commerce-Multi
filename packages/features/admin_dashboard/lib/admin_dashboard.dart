@@ -1,13 +1,16 @@
-/// Admin KPI dashboard - at-a-glance store health for admin users.
+/// Admin KPI dashboard feature.
 ///
-/// Feature-first Clean Architecture package: `src/domain`, `src/data`, and
-/// `src/presentation` subtrees are added when this feature's implementation
-/// phase begins (Phase 22, see docs/03_DEVELOPMENT_PHASES.md and
-/// docs/04_FEATURE_IMPLEMENTATION_ORDER.md for the full specification).
+/// Only symbols exported here are a public contract other packages may depend
+/// on (docs/02_PROJECT_STRUCTURE.md §6 / §11).
 ///
-/// Only symbols exported from this barrel file are a public contract other
-/// packages may depend on (see docs/02_PROJECT_STRUCTURE.md §6 and §11).
-///
-/// Nothing is exported yet - this is a Phase 1 (Project Foundation)
-/// placeholder so the package compiles as part of the monorepo.
+/// Phase 8 ships the KPI shell + mock aggregation; deeper analytics/reports
+/// remain Phase 22.
 library;
+
+export 'src/domain/entities/dashboard_kpi_set.dart';
+export 'src/domain/entities/sales_trend_point.dart';
+export 'src/domain/repositories/analytics_repository.dart';
+export 'src/domain/usecases/get_dashboard_kpis.dart';
+export 'src/injection/admin_dashboard_injection.dart';
+export 'src/presentation/bloc/admin_dashboard_bloc.dart';
+export 'src/presentation/screens/admin_dashboard_screen.dart';

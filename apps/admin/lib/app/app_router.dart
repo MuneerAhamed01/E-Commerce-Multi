@@ -1,3 +1,4 @@
+import 'package:admin_dashboard/admin_dashboard.dart';
 import 'package:authentication/authentication.dart';
 import 'package:core/core.dart';
 import 'package:design_system/design_system.dart';
@@ -123,10 +124,7 @@ GoRouter createAdminRouter({
               GoRoute(
                 path: SystemRoutes.adminDashboardPath,
                 name: SystemRoutes.adminDashboardName,
-                builder: (context, state) => PlaceholderPage(
-                  title: 'Dashboard',
-                  subtitle: tenantConfig.displayName,
-                ),
+                builder: (context, state) => const AdminDashboardScreen(),
               ),
             ],
           ),

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:admin_dashboard/admin_dashboard.dart';
 import 'package:authentication/authentication.dart';
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
@@ -50,6 +51,8 @@ Future<void> bootstrap({
       configureMockInjection();
       // Auth feature (Phase 7) — shared use cases; admin login uses requireAdmin.
       await configureAuthenticationInjection();
+      // Admin dashboard KPIs (Phase 8).
+      configureAdminDashboardInjection();
 
       FlutterError.onError = (details) {
         logger.error(

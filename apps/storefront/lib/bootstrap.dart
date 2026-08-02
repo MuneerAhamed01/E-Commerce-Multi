@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:authentication/authentication.dart';
 import 'package:core/core.dart';
+import 'package:dashboard/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
@@ -50,6 +51,8 @@ Future<void> bootstrap({
       configureMockInjection();
       // Auth feature (Phase 7) — session/use cases/AuthBloc.
       await configureAuthenticationInjection();
+      // Storefront home (Phase 8).
+      configureDashboardInjection();
 
       FlutterError.onError = (details) {
         logger.error(

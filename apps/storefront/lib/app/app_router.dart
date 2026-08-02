@@ -1,5 +1,6 @@
 import 'package:authentication/authentication.dart';
 import 'package:core/core.dart';
+import 'package:dashboard/dashboard.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
@@ -119,6 +120,17 @@ GoRouter createStorefrontRouter({
             tenantConfig: tenantConfig,
           ),
         ),
+      GoRoute(
+        path: '/products/:productId',
+        name: 'ProductDetailRoute',
+        builder: (context, state) {
+          final productId = state.pathParameters['productId'] ?? '';
+          return PlaceholderPage(
+            title: 'Product',
+            subtitle: productId.isEmpty ? null : productId,
+          );
+        },
+      ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) {
           return StorefrontShell(
@@ -132,10 +144,7 @@ GoRouter createStorefrontRouter({
               GoRoute(
                 path: SystemRoutes.storefrontHomePath,
                 name: SystemRoutes.storefrontHomeName,
-                builder: (context, state) => PlaceholderPage(
-                  title: 'Home',
-                  subtitle: tenantConfig.displayName,
-                ),
+                builder: (context, state) => const HomeScreen(),
               ),
             ],
           ),
