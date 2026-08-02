@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:authentication/authentication.dart';
+import 'package:cart/cart.dart';
 import 'package:categories/categories.dart';
 import 'package:core/core.dart';
 import 'package:dashboard/dashboard.dart';
@@ -65,6 +66,8 @@ Future<void> bootstrap({
       configureSearchInjection();
       // Wishlist (Phase 12) — requires auth session + SharedPreferences.
       configureWishlistInjection();
+      // Cart (Phase 13) — requires products + SharedPreferences.
+      configureCartInjection();
 
       FlutterError.onError = (details) {
         logger.error(

@@ -14,12 +14,12 @@
 |---|---|
 | Total Phases | 29 |
 | Total Milestones | 98 |
-| 🟩 Completed | 41 |
+| 🟩 Completed | 44 |
 | 🟨 In Progress | 0 |
-| ⬜ Pending | 57 |
-| **Overall Completion** | **42%** |
+| ⬜ Pending | 54 |
+| **Overall Completion** | **45%** |
 | Plan Approval Status | 🟩 Approved (implementation underway) |
-| Last Updated | 2026-08-02 (Phase 9 complete) |
+| Last Updated | 2026-08-02 (Phase 13 complete) |
 
 ---
 
@@ -135,9 +135,9 @@
 
 | ID | Milestone | Status | Completion Date | Notes |
 |---|---|---|---|---|
-| 13.1 | Cart domain/data | ⬜ Pending | | |
-| 13.2 | Cart presentation | ⬜ Pending | | |
-| 13.3 | Global cart badge integration | ⬜ Pending | | |
+| 13.1 | Cart domain/data | 🟩 Complete | 2026-08-02 | `Cart`/`CartItem`/`PricingBreakdown` + local `CartPromoCatalog` (Marketing deviation); `CartRepository` → SharedPreferences mock; pricing engine unit-tested (zero qty, stock cap, invalid/expired/min-spend, single promo); use cases Add/Update/Remove/Clear/Apply/RemovePromo/GetCart/GetCartSummary; `configureCartInjection()`. |
+| 13.2 | Cart presentation | 🟩 Complete | 2026-08-02 | `CartBloc` lazy singleton; `CartScreen` `/cart`; `CartLineItem`/`CartSummaryPanel`/`AppQuantityStepper`/`AppPromoCodeField`; storefront wires detail add-to-cart via `onAddToCart` (no `products`→`cart` cycle); checkout soft CTA Phase 14. |
+| 13.3 | Global cart badge integration | 🟩 Complete | 2026-08-02 | Shell bottom-nav Cart tab with live `badgeCount` (sum of quantities); tap → `/cart` shell branch. |
 
 ## Phase 14 — Checkout
 

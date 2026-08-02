@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../domain/entities/product.dart';
+import '../../domain/entities/product_variant.dart';
 import '../bloc/product_detail_bloc.dart';
 import '../cubit/reviews_cubit.dart';
 import '../routing/product_routes.dart';
@@ -24,6 +25,7 @@ class ProductDetailScreen extends StatelessWidget {
     this.reviewsCubit,
     this.wishlistActionBuilder,
     this.relatedWishlistActionBuilder,
+    this.onAddToCart,
     super.key,
   });
 
@@ -43,6 +45,15 @@ class ProductDetailScreen extends StatelessWidget {
   final Widget Function(BuildContext context, Product product)?
   relatedWishlistActionBuilder;
 
+  /// Optional add-to-cart handler composed by the app shell (avoids a
+  /// `products` → `cart` package dependency).
+  final Future<void> Function(
+    BuildContext context,
+    Product product,
+    ProductVariant variant,
+  )?
+  onAddToCart;
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -60,6 +71,7 @@ class ProductDetailScreen extends StatelessWidget {
       child: _ProductDetailView(
         wishlistActionBuilder: wishlistActionBuilder,
         relatedWishlistActionBuilder: relatedWishlistActionBuilder,
+        onAddToCart: onAddToCart,
       ),
     );
   }
@@ -69,6 +81,7 @@ class _ProductDetailView extends StatelessWidget {
   const _ProductDetailView({
     this.wishlistActionBuilder,
     this.relatedWishlistActionBuilder,
+    this.onAddToCart,
   });
 
   final Widget Function(
@@ -79,6 +92,12 @@ class _ProductDetailView extends StatelessWidget {
   wishlistActionBuilder;
   final Widget Function(BuildContext context, Product product)?
   relatedWishlistActionBuilder;
+  final Future<void> Function(
+    BuildContext context,
+    Product product,
+    ProductVariant variant,
+  )?
+  onAddToCart;
 
   @override
   Widget build(BuildContext context) {
@@ -140,13 +159,27 @@ class _ProductDetailView extends StatelessWidget {
                           ? 'Add to cart'
                           : 'Out of stock',
                       isFullWidth: true,
-                      onPressed: state.canAddToCart
-                          ? () => context.read<ProductDetailBloc>().add(
-                              const ProductAddToCartPressed(),
-                            )
-                          : () => context.read<ProductDetailBloc>().add(
-                              const ProductAddToCartPressed(),
-                            ),
+                      onPressed: () {
+                        final loaded = state;
+                        if (!loaded.canAddToCart) {
+                          context.read<ProductDetailBloc>().add(
+                            const ProductAddToCartPressed(),
+                          );
+                          return;
+                        }
+                        final handler = onAddToCart;
+                        if (handler != null) {
+                          handler(
+                            context,
+                            loaded.product,
+                            loaded.selectedVariant,
+                          );
+                          return;
+                        }
+                        context.read<ProductDetailBloc>().add(
+                          const ProductAddToCartPressed(),
+                        );
+                      },
                     ),
                   ),
                 )

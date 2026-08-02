@@ -1,9 +1,12 @@
 import 'package:authentication/authentication.dart';
+import 'package:cart/cart.dart';
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 import 'package:storefront/app/app_router.dart';
+import 'package:wishlist/wishlist.dart';
 
 import 'helpers/router_test_auth.dart';
 
@@ -19,6 +22,17 @@ Future<void> _pumpUntil(
     }
   }
   fail('Condition not met after $maxPumps pumps');
+}
+
+Widget _app(GoRouter router, RouterTestAuth auth) {
+  return MultiBlocProvider(
+    providers: [
+      BlocProvider<AuthBloc>.value(value: auth.bloc),
+      BlocProvider<WishlistCubit>.value(value: getIt<WishlistCubit>()),
+      BlocProvider<CartBloc>.value(value: getIt<CartBloc>()),
+    ],
+    child: MaterialApp.router(routerConfig: router),
+  );
 }
 
 void main() {
@@ -43,12 +57,7 @@ void main() {
       refreshListenable: auth.listenable,
     );
 
-    await tester.pumpWidget(
-      BlocProvider<AuthBloc>.value(
-        value: auth.bloc,
-        child: MaterialApp.router(routerConfig: router),
-      ),
-    );
+    await tester.pumpWidget(_app(router, auth));
     await _pumpUntil(
       tester,
       () => router.state.matchedLocation == SystemRoutes.storefrontLoginPath,
@@ -69,12 +78,7 @@ void main() {
       refreshListenable: auth.listenable,
     );
 
-    await tester.pumpWidget(
-      BlocProvider<AuthBloc>.value(
-        value: auth.bloc,
-        child: MaterialApp.router(routerConfig: router),
-      ),
-    );
+    await tester.pumpWidget(_app(router, auth));
     await _pumpUntil(
       tester,
       () => router.state.matchedLocation == SystemRoutes.storefrontLoginPath,
@@ -97,12 +101,7 @@ void main() {
       refreshListenable: auth.listenable,
     );
 
-    await tester.pumpWidget(
-      BlocProvider<AuthBloc>.value(
-        value: auth.bloc,
-        child: MaterialApp.router(routerConfig: router),
-      ),
-    );
+    await tester.pumpWidget(_app(router, auth));
     await _pumpUntil(
       tester,
       () => router.state.matchedLocation == SystemRoutes.storefrontLoginPath,
