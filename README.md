@@ -4,7 +4,7 @@
 
 Production-ready, multi-tenant, white-label e-commerce platform: Flutter Mobile + Flutter Web storefront, and a Flutter Admin Panel, built on Clean Architecture with Firebase-ready data contracts.
 
-**Status: Phase 4 (Design System & Shared Widgets) complete.** The monorepo/tooling/app shells are scaffolded (Phase 1), `packages/core` has its architecture primitives (Phase 2), both apps boot through a real `bootstrap()` that loads `AppConfig`/`TenantConfig`/feature flags (Phase 3), and `packages/design_system` now has tokens, `AppTheme` (driven by `TenantConfig`), the shared component library, and a dev-only gallery — wired into both apps (Phase 4). See `docs/14_IMPLEMENTATION_PROGRESS.md` for live milestone status. All subsequent phases proceed strictly in the documented order.
+**Status: Phase 5 (Routing Foundation) complete** on branch `phase/5-routing-foundation`. Both apps use `go_router` with shell navigation, shared `RouteGuard` in `core`, and 404/maintenance screens. See `docs/14_IMPLEMENTATION_PROGRESS.md` for live milestone status.
 
 ## Getting Started
 

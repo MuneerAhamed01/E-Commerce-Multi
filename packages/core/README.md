@@ -11,6 +11,7 @@ for the full specification.
 | Folder | Contents |
 |---|---|
 | `config/` | `AppConfig` (env-aware, `--dart-define`-backed), `TenantConfig`/`BrandingTokens`/`CopyOverrides` (bundled-JSON-backed), `FeatureFlag`/`FeatureFlagSet`/`FeatureFlagService` |
+| `routing/` | `RouteGuard`, `AuthSessionState`, `AdminPermission`, `SystemRoutes` (pure Dart — no `go_router` dependency) |
 | `error/` | `Failure` (sealed, typed error contract), `AppException` (data-layer-only exceptions), `Result<F, S>` (Either-style outcome) |
 | `usecase/` | `UseCase<Type, Params>` / `StreamUseCase<Type, Params>` callable-class base contracts, shared `NoParams` |
 | `pagination/` | `PaginatedResult<T>` - shared list envelope for every repository |
