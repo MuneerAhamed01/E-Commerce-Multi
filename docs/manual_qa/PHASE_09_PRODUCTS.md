@@ -1,7 +1,8 @@
 # Phase 9 — Products Manual Test Cases
 
 **Branch:** `phase/9-products`  
-**PR:** _(add after open)_  
+**PR:** [https://github.com/MuneerAhamed01/E-Commerce-Multi/pull/7](https://github.com/MuneerAhamed01/E-Commerce-Multi/pull/7)  
+
 **Base:** `phase/8-dashboard-home` (stacked — merge to `develop` only after Phase 8 merges **and** every case below is `Pass` / justified `N/A`).
 
 | Field | Value |
