@@ -10,12 +10,24 @@ import '../widgets/product_card.dart';
 
 /// Paginated catalog listing with optional category filter.
 class ProductListScreen extends StatelessWidget {
-  const ProductListScreen({this.categoryId, this.listBloc, super.key});
+  const ProductListScreen({
+    this.categoryId,
+    this.listBloc,
+    this.title = 'Products',
+    this.header,
+    super.key,
+  });
 
   final String? categoryId;
 
   /// Optional override for tests; defaults to `getIt<ProductListBloc>()`.
   final ProductListBloc? listBloc;
+
+  /// App bar title (Category Detail passes the category name).
+  final String title;
+
+  /// Optional chrome above the grid (e.g. category breadcrumb / chips).
+  final Widget? header;
 
   @override
   Widget build(BuildContext context) {
@@ -23,13 +35,16 @@ class ProductListScreen extends StatelessWidget {
       create: (_) =>
           (listBloc ?? getIt<ProductListBloc>())
             ..add(ProductListStarted(categoryId: categoryId)),
-      child: const _ProductListView(),
+      child: _ProductListView(title: title, header: header),
     );
   }
 }
 
 class _ProductListView extends StatefulWidget {
-  const _ProductListView();
+  const _ProductListView({required this.title, this.header});
+
+  final String title;
+  final Widget? header;
 
   @override
   State<_ProductListView> createState() => _ProductListViewState();
@@ -65,18 +80,31 @@ class _ProductListViewState extends State<_ProductListView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Products')),
+      appBar: AppBar(title: Text(widget.title)),
       body: BlocBuilder<ProductListBloc, ProductListState>(
         builder: (context, state) {
           return switch (state) {
-            ProductListInitial() ||
-            ProductListLoading() => const _ProductListSkeleton(),
-            ProductListError(:final message) => AppErrorState(
-              title: 'Could not load products',
-              message: message,
-              onRetry: () => context.read<ProductListBloc>().add(
-                const ProductListRetried(),
-              ),
+            ProductListInitial() || ProductListLoading() => Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                if (widget.header != null) widget.header!,
+                const Expanded(child: _ProductListSkeleton()),
+              ],
+            ),
+            ProductListError(:final message) => Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                if (widget.header != null) widget.header!,
+                Expanded(
+                  child: AppErrorState(
+                    title: 'Could not load products',
+                    message: message,
+                    onRetry: () => context.read<ProductListBloc>().add(
+                      const ProductListRetried(),
+                    ),
+                  ),
+                ),
+              ],
             ),
             ProductListLoaded(
               :final products,
@@ -87,14 +115,23 @@ class _ProductListViewState extends State<_ProductListView> {
               :final totalCount,
             ) =>
               products.isEmpty
-                  ? AppEmptyState(
-                      title: 'No products found',
-                      message: categoryId == null
-                          ? 'The catalog is empty for this store.'
-                          : 'No products in this category yet.',
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        if (widget.header != null) widget.header!,
+                        Expanded(
+                          child: AppEmptyState(
+                            title: 'No products found',
+                            message: categoryId == null
+                                ? 'The catalog is empty for this store.'
+                                : 'No products in this category yet.',
+                          ),
+                        ),
+                      ],
                     )
                   : Column(
                       children: [
+                        if (widget.header != null) widget.header!,
                         if (categoryId != null || totalCount != null)
                           Padding(
                             padding: const EdgeInsets.fromLTRB(

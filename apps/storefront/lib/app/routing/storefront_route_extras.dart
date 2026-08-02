@@ -1,4 +1,5 @@
 import 'package:authentication/authentication.dart';
+import 'package:categories/categories.dart';
 import 'package:core/core.dart';
 import 'package:products/products.dart';
 
@@ -25,7 +26,8 @@ const storefrontRouteExtras = <String, StorefrontRouteExtras>{
     access: RouteAccess.authFlow,
   ),
   'HomeRoute': StorefrontRouteExtras(access: RouteAccess.public),
-  'CategoryBrowseRoute': StorefrontRouteExtras(access: RouteAccess.public),
+  CategoryRoutes.browseName: StorefrontRouteExtras(access: RouteAccess.public),
+  CategoryRoutes.detailName: StorefrontRouteExtras(access: RouteAccess.public),
   ProductRoutes.listName: StorefrontRouteExtras(access: RouteAccess.public),
   ProductRoutes.detailName: StorefrontRouteExtras(access: RouteAccess.public),
   'SearchRoute': StorefrontRouteExtras(access: RouteAccess.public),

@@ -113,8 +113,8 @@
 
 | ID | Milestone | Status | Completion Date | Notes |
 |---|---|---|---|---|
-| 10.1 | Categories domain/data | ⬜ Pending | | |
-| 10.2 | Categories presentation | ⬜ Pending | | |
+| 10.1 | Categories domain/data | 🟩 Complete | 2026-08-02 | `Category` tree entity + `CategoryDetail` (ancestors); `CategoryRepository` → `MockCategoryRepositoryImpl`; `GetCategoryTree` / `GetCategoryDetail`; mock DS via `MockSeedStore` + `CategoryTreeBuilder`; `configureCategoriesInjection()`. |
+| 10.2 | Categories presentation | 🟩 Complete | 2026-08-02 | `CategoryTreeCubit` browse (grid + in-place drill) + `CategoryDetailCubit`; Detail reuses `ProductListScreen`/`ProductListBloc` with `categoryId`; widgets breadcrumb/chips/tile; routes `/categories`, `/categories/:categoryId`; Home featured taps deep-link to detail. |
 
 ## Phase 11 — Search
 

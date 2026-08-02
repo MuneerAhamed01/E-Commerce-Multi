@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:authentication/authentication.dart';
+import 'package:categories/categories.dart';
 import 'package:core/core.dart';
 import 'package:dashboard/dashboard.dart';
 import 'package:flutter/material.dart';
@@ -56,6 +57,8 @@ Future<void> bootstrap({
       configureDashboardInjection();
       // Products catalog (Phase 9).
       configureProductsInjection();
+      // Categories browse/detail (Phase 10).
+      configureCategoriesInjection();
 
       FlutterError.onError = (details) {
         logger.error(

@@ -29,6 +29,8 @@ class HomeScreen extends StatelessWidget {
 
   static String productPath(String productId) => '/products/$productId';
 
+  static String categoryPath(String categoryId) => '/categories/$categoryId';
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -125,7 +127,7 @@ class HomeScreen extends StatelessWidget {
   void _onBannerTap(BuildContext context, HomeBanner banner) {
     switch (banner.targetKind) {
       case HomeBannerTargetKind.category:
-        context.go(categoriesPath);
+        context.go(categoryPath(banner.targetId));
       case HomeBannerTargetKind.product:
         context.push(productPath(banner.targetId));
       case HomeBannerTargetKind.external:
@@ -134,7 +136,7 @@ class HomeScreen extends StatelessWidget {
   }
 
   void _onCategoryTap(BuildContext context, FeaturedCategory category) {
-    context.go(categoriesPath);
+    context.go(categoryPath(category.id));
   }
 
   void _onProductTap(BuildContext context, FeaturedProduct product) {

@@ -1,4 +1,5 @@
 import 'package:authentication/authentication.dart';
+import 'package:categories/categories.dart';
 import 'package:core/core.dart';
 import 'package:dashboard/dashboard.dart';
 import 'package:design_system/design_system.dart';
@@ -158,10 +159,23 @@ GoRouter createStorefrontRouter({
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: '/categories',
-                name: 'CategoryBrowseRoute',
-                builder: (context, state) =>
-                    const PlaceholderPage(title: 'Categories'),
+                path: CategoryRoutes.browsePath,
+                name: CategoryRoutes.browseName,
+                builder: (context, state) => const CategoryBrowseScreen(),
+                routes: [
+                  GoRoute(
+                    path: ':categoryId',
+                    name: CategoryRoutes.detailName,
+                    builder: (context, state) {
+                      final categoryId =
+                          state.pathParameters['categoryId'] ?? '';
+                      return CategoryDetailScreen(
+                        key: ValueKey(categoryId),
+                        categoryId: categoryId,
+                      );
+                    },
+                  ),
+                ],
               ),
             ],
           ),
