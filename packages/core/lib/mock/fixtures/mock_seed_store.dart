@@ -9,8 +9,10 @@ import 'seed_models.dart';
 /// storefront sees the same in-memory source of truth. [reset] restores
 /// the original seed snapshot (wired to the Developer Panel).
 final class MockSeedStore {
-  MockSeedStore({MockDeveloperControls? controls})
-    : _controls = controls { // ignore: prefer_initializing_formals
+  // A private field can't be an initializing formal (`this._controls`) with a
+  // public named parameter (`controls:`) at the same time.
+  // ignore: prefer_initializing_formals
+  MockSeedStore({MockDeveloperControls? controls}) : _controls = controls {
     reset();
     _controls?.registerResetListener(reset);
   }
