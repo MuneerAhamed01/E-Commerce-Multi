@@ -6,11 +6,19 @@ Commerce Platform. This is a thin app shell - business logic and UI live in
 
 ## Running
 
+Each flavor needs its matching `--dart-define-from-file` (see
+`docs/11_ENVIRONMENT_CONFIGURATION.md` §3):
+
 ```bash
-fvm flutter run -t lib/main_dev.dart        # dev flavor
-fvm flutter run -t lib/main_staging.dart    # staging flavor
-fvm flutter run -t lib/main_prod.dart       # prod flavor
+fvm flutter run -t lib/main_dev.dart     --dart-define-from-file=../../config/env/dev.env
+fvm flutter run -t lib/main_staging.dart --dart-define-from-file=../../config/env/staging.env
+fvm flutter run -t lib/main_prod.dart    --dart-define-from-file=../../config/env/prod.env --release
 ```
 
-Currently a Phase 1 (Project Foundation) placeholder - see
+`assets/tenants` is a symlink to the repo-root `config/tenants/` (single
+source of truth for tenant JSON files - see `bootstrap.dart` and
+`docs/11_ENVIRONMENT_CONFIGURATION.md` §6); don't replace it with a real
+directory.
+
+Currently a Phase 3 (Environment & Configuration) placeholder - see
 `docs/03_DEVELOPMENT_PHASES.md`.

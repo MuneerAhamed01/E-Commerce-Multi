@@ -14,12 +14,12 @@
 |---|---|
 | Total Phases | 29 |
 | Total Milestones | 98 |
-| 🟩 Completed | 9 |
+| 🟩 Completed | 19 |
 | 🟨 In Progress | 0 |
-| ⬜ Pending | 89 |
-| **Overall Completion** | **9%** |
+| ⬜ Pending | 79 |
+| **Overall Completion** | **19%** |
 | Plan Approval Status | 🟩 Approved (implementation underway) |
-| Last Updated | 2026-08-01 (Phase 2 complete) |
+| Last Updated | 2026-08-02 (Phase 4 complete) |
 
 ---
 
@@ -46,21 +46,21 @@
 
 | ID | Milestone | Status | Completion Date | Notes |
 |---|---|---|---|---|
-| 3.1 | AppConfig & env loading | ⬜ Pending | | |
-| 3.2 | TenantConfig & default tenant | ⬜ Pending | | |
-| 3.3 | Feature flag service | ⬜ Pending | | |
-| 3.4 | Flavor wiring in both apps | ⬜ Pending | | |
+| 3.1 | AppConfig & env loading | 🟩 Complete | 2026-08-02 | `Environment`/`DataSourceMode` enums + `AppConfig` (`packages/core/lib/config/app_config.dart`); `AppConfig.forEnvironment()` is the *only* call site in the entire codebase for `String\|int\|bool.fromEnvironment` - `config/env/{dev,staging,prod}.env` provide `--dart-define-from-file` values, each with a compiled per-environment default (verified overrides actually flow through via a manual `dart run --define=...` smoke check). `AppLogger` gained `setMinLevel()` so bootstrap can apply `AppConfig.logLevel` post-DI-registration without a get_it re-registration dance. |
+| 3.2 | TenantConfig & default tenant | 🟩 Complete | 2026-08-02 | `TenantConfig`, `BrandingTokens` (hex-string colors - `core` stays Flutter-free, `design_system` parses to `Color` in Phase 4), `CopyOverrides` in `tenant_config.dart`; `config/tenants/default_tenant.json` is the canonical, version-controlled tenant file matching the schema exactly (round-trip-tested). |
+| 3.3 | Feature flag service | 🟩 Complete | 2026-08-02 | `FeatureFlag` enum (8 baseline flags per plan), `FeatureFlagSet` (typed map, additive-only/defaults-enabled-when-absent), `FeatureFlagService.isEnabled()` single call-site pattern - all in `feature_flags.dart`. |
+| 3.4 | Flavor wiring in both apps | 🟩 Complete | 2026-08-02 | Real `bootstrap()` in both apps: loads `AppConfig` + `TenantConfig` (bundled asset), configures DI (`configureCoreInjection()` + manual `AppConfig`/`TenantConfig`/`FeatureFlagService` singleton registration), sets the resolved log level, wraps `runApp` in `runZonedGuarded` + `FlutterError.onError` (per `05_ARCHITECTURE_GUIDELINES.md` §14). `main_prod.dart` passes a hardcoded `developerModeForcedOff: true` literal (defense-in-depth, not env-var-controlled) in both apps. **Deviation:** Flutter does not reliably bundle assets declared with a `../` pubspec path (confirmed via `flutter build web`: the file was missing from the compiled output even though referenced in the manifest) - each app's `assets/tenants` is instead a symlink to the root `config/tenants/` directory, keeping one canonical JSON source while satisfying Flutter's asset-bundling requirement that assets live under the package root; verified via `flutter build web` for `dev`/`staging`/`prod` flavors of both apps with the resulting bundle inspected for the real file. `AppWidget` in both apps now displays resolved environment/tenant/data-source and gates a placeholder element on a `FeatureFlag` (`wishlist` for storefront, `support` for admin). |
 
 ## Phase 4 — Design System & Shared Widgets
 
 | ID | Milestone | Status | Completion Date | Notes |
 |---|---|---|---|---|
-| 4.1 | Design tokens | ⬜ Pending | | |
-| 4.2 | Theme builder | ⬜ Pending | | |
-| 4.3 | Buttons, inputs, chips | ⬜ Pending | | |
-| 4.4 | Cards, dialogs, bottom sheets | ⬜ Pending | | |
-| 4.5 | State & feedback widgets | ⬜ Pending | | |
-| 4.6 | Navigation, tables, charts shells | ⬜ Pending | | |
+| 4.1 | Design tokens | 🟩 Complete | 2026-08-02 | `AppColors`, `AppTypography`, `AppSpacing`, `AppRadii`, `AppElevation`, `AppBreakpoints` in `packages/design_system/lib/tokens/`; unit-tested scale invariants. |
+| 4.2 | Theme builder | 🟩 Complete | 2026-08-02 | `AppTheme.light/dark(TenantConfig)` parses branding hex into `ColorScheme` + `TextTheme`; `AppSemanticColors` `ThemeExtension` for success/warning/info/border/disabled. Components stay theme-aware, never tenant-aware. |
+| 4.3 | Buttons, inputs, chips | 🟩 Complete | 2026-08-02 | `AppButton`/`AppIconButton`/`AppTextLinkButton`/`AppFloatingActionButton`; `AppTextField`/`AuthTextField`/`AppSearchBar`/`AppDropdown`/`AppQuantityStepper`/`OtpInputRow`/`PasswordStrengthIndicator`/`PromoCodeField`; `AppFilterChip`/`RecentSearchChip`/`SearchSuggestionTile`/`ActiveFilterChipRow`. |
+| 4.4 | Cards, dialogs, bottom sheets | 🟩 Complete | 2026-08-02 | `AppCard`/`AppKpiCard`/`AppAddressCard`; `AppAlertDialog`; `AppActionSheet`/`AppFilterBottomSheet`/`AppSortBottomSheet`/`AppLanguagePickerSheet`. Feature-specific cards (`ProductCard`, etc.) deferred to owning features per `08_COMPONENT_LIBRARY.md` §7. |
+| 4.5 | State & feedback widgets | 🟩 Complete | 2026-08-02 | `AppLoadingIndicator`/`AppShimmerPlaceholder`/`PaginationLoader`/`AppEmptyState`/`AppErrorState`/`AppInlineErrorBanner`/`NetworkOfflineBanner`; `AppSnackbar`/`AppBanner`; sealed `ListViewState<T>` helper. |
+| 4.6 | Navigation, tables, charts shells | 🟩 Complete | 2026-08-02 | `AppTopBar`/`AppBottomNavBar`/`AppSideNav`/`AppTabBar`/`AppCategoryBreadcrumb`/`AppStepperHeader`; `AppDataTable`/`AppPaginationControl`/`AppBulkActionToolbar`/`AppTableEmptyRow`; chart shells (`AppLineChartCard`/`AppBarChartCard`/`AppDonutChartCard`/`AppTopProductsTable`) with token-driven CustomPaint (no chart package). Dev-only `DesignSystemGallery` (light/dark + default/Acme tenants) wired as home when `isDeveloperModeAvailable`. Both apps depend on `design_system` and apply `AppTheme`. 217 package tests pass. |
 
 ## Phase 5 — Routing Foundation
 
@@ -275,5 +275,8 @@
 | — | Document created; all 98 milestones initialized to ⬜ Pending pending plan approval | Planning Team |
 | 2026-08-01 | Phase 1 (Project Foundation) completed - milestones 1.1-1.4 | Engineering |
 | 2026-08-01 | Phase 2 (Core Architecture) completed - milestones 2.1-2.5 | Engineering |
+| 2026-08-02 | Phase 3 (Environment & Configuration) completed - milestones 3.1-3.4 | Engineering |
+| 2026-08-02 | Phase 4 (Design System & Shared Widgets) completed - milestones 4.1-4.6 | Engineering |
+| 2026-08-02 | Added `.github/workflows/ci.yml` (format/analyze/test via FVM + Melos) — closes the Phase 1.4 "CI-ready scripts" gap (scripts existed; GitHub Actions did not) | Engineering |
 
 > Add a new row here every time this document is updated, in addition to updating the relevant milestone row above. This creates an audit trail independent of git history for quick project-status review.

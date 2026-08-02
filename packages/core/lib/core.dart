@@ -11,6 +11,9 @@
 /// docs/03_DEVELOPMENT_PHASES.md.
 library;
 
+export 'config/app_config.dart';
+export 'config/feature_flags.dart';
+export 'config/tenant_config.dart';
 export 'di/injection_container.dart';
 export 'error/exception.dart';
 export 'error/failure.dart';

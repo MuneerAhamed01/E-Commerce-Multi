@@ -18,6 +18,11 @@ enum LogLevel { debug, info, warning, error }
 /// for structured filtering. Never log PII (email, full name) as [message]
 /// or [error] - log an id instead.
 abstract class AppLogger {
+  /// Sets the minimum severity that should actually be emitted; calls
+  /// below this level are silently dropped. Set once at bootstrap from
+  /// `AppConfig.logLevel` - see docs/11_ENVIRONMENT_CONFIGURATION.md §10.
+  void setMinLevel(LogLevel level);
+
   void debug(
     String message, {
     String? feature,
@@ -53,7 +58,14 @@ abstract class AppLogger {
 /// plan's mock-data phase - see docs/05_ARCHITECTURE_GUIDELINES.md §16.
 @LazySingleton(as: AppLogger)
 final class ConsoleAppLogger implements AppLogger {
-  const ConsoleAppLogger();
+  ConsoleAppLogger();
+
+  /// Defaults to showing everything until `bootstrap()` narrows it via
+  /// [setMinLevel] once `AppConfig.logLevel` is known.
+  LogLevel _minLevel = LogLevel.debug;
+
+  @override
+  void setMinLevel(LogLevel level) => _minLevel = level;
 
   @override
   void debug(
@@ -126,6 +138,9 @@ final class ConsoleAppLogger implements AppLogger {
     Object? error,
     StackTrace? stackTrace,
   }) {
+    if (level.index < _minLevel.index) {
+      return;
+    }
     developer.log(
       message,
       name: feature ?? 'app',

@@ -12,11 +12,12 @@ environment:
   flutter: ">=3.44.0"
 
 dependencies:
+  core: ^0.1.0
+  design_system: ^0.1.0
   flutter:
     sdk: flutter
-  # core, design_system, go_router, get_it/injectable, and every consumed
-  # customer feature package: wired starting Phase 2
-  # (see docs/03_DEVELOPMENT_PHASES.md).
+  # go_router and every consumed customer feature package: wired starting
+  # Phase 5+ (see docs/03_DEVELOPMENT_PHASES.md).
 
 dev_dependencies:
   flutter_test:
@@ -24,3 +25,12 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    # `assets/tenants` is a symlink to the canonical `config/tenants/` at
+    # the repo root (Flutter does not reliably bundle assets declared with
+    # a `../` path, so the in-app-root symlink is the single source of
+    # truth without duplicating the JSON files) - see
+    # docs/11_ENVIRONMENT_CONFIGURATION.md §6.
+    # A tenant-management upload feature (Phase 26) replaces this with a
+    # remote-config-backed source without changing the loader's shape.
+    - assets/tenants/

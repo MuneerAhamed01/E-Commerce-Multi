@@ -25,6 +25,6 @@ _i174.GetIt initCore(
   gh.lazySingleton<_i932.NetworkInfo>(
     () => const _i932.AlwaysOnlineNetworkInfo(),
   );
-  gh.lazySingleton<_i354.AppLogger>(() => const _i354.ConsoleAppLogger());
+  gh.lazySingleton<_i354.AppLogger>(() => _i354.ConsoleAppLogger());
   return getIt;
 }

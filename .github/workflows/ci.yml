@@ -1,0 +1,63 @@
+# Continuous verification for the White Label Commerce Platform monorepo.
+# Mirrors the melos scripts prepared in Phase 1.4 ("CI-ready scripts") —
+# see docs/03_DEVELOPMENT_PHASES.md and root pubspec.yaml `melos.scripts`.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Format · Analyze · Test
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Read Flutter version from .fvmrc
+        id: fvm
+        run: echo "version=$(jq -r .flutter .fvmrc)" >> "$GITHUB_OUTPUT"
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ steps.fvm.outputs.version }}
+          channel: stable
+          cache: true
+
+      - name: Activate Melos + FVM
+        run: |
+          dart pub global activate melos
+          dart pub global activate fvm
+          echo "$HOME/.pub-cache/bin" >> "$GITHUB_PATH"
+
+      # Melos scripts call `fvm flutter` / `fvm dart` (see root pubspec.yaml).
+      # Point FVM at the Flutter SDK installed by flutter-action so those
+      # scripts work unchanged in CI.
+      - name: Link FVM Flutter SDK
+        run: |
+          mkdir -p .fvm
+          ln -sfn "$FLUTTER_ROOT" .fvm/flutter_sdk
+          fvm flutter --version
+
+      - name: Resolve workspace
+        run: dart pub get
+
+      - name: Format
+        run: melos run format
+
+      - name: Analyze
+        # Serialize analyze to avoid the known "Waiting for another flutter
+        # command to release the startup lock" race under melos concurrency.
+        run: melos exec --concurrency=1 -- "fvm flutter analyze ."
+
+      - name: Test
+        run: melos run test

@@ -1,0 +1,26 @@
+{
+  "tenantId": "default",
+  "displayName": "White Label Commerce Platform",
+  "branding": {
+    "primaryColorHex": "#2563EB",
+    "secondaryColorHex": "#F97316",
+    "logoAssetPath": "assets/branding/default_logo.png",
+    "logoUrl": null,
+    "fontFamily": "Inter"
+  },
+  "copy": {},
+  "featureFlags": {
+    "wishlist": true,
+    "reviews": true,
+    "promotions": true,
+    "guestCheckout": true,
+    "notifications": true,
+    "support": true,
+    "multiplePaymentMethods": true,
+    "productVariants": true
+  },
+  "defaultLocale": "en_US",
+  "supportEmail": "support@example.com",
+  "allowGuestBrowsing": true,
+  "allowGuestCart": true
+}

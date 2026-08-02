@@ -1,8 +1,10 @@
 # White Label Commerce Platform
 
+[![CI](https://github.com/MuneerAhamed01/E-Commerce-Multi/actions/workflows/ci.yml/badge.svg)](https://github.com/MuneerAhamed01/E-Commerce-Multi/actions/workflows/ci.yml)
+
 Production-ready, multi-tenant, white-label e-commerce platform: Flutter Mobile + Flutter Web storefront, and a Flutter Admin Panel, built on Clean Architecture with Firebase-ready data contracts.
 
-**Status: Phase 2 (Core Architecture) complete.** The monorepo/tooling/app shells are scaffolded (Phase 1) and `packages/core` now has its error handling, use case/pagination contracts, DI bootstrap, logging/network contracts, and shared entities/utils - all unit-tested (Phase 2). See `docs/14_IMPLEMENTATION_PROGRESS.md` for live milestone status. All subsequent phases proceed strictly in the documented order.
+**Status: Phase 4 (Design System & Shared Widgets) complete.** The monorepo/tooling/app shells are scaffolded (Phase 1), `packages/core` has its architecture primitives (Phase 2), both apps boot through a real `bootstrap()` that loads `AppConfig`/`TenantConfig`/feature flags (Phase 3), and `packages/design_system` now has tokens, `AppTheme` (driven by `TenantConfig`), the shared component library, and a dev-only gallery — wired into both apps (Phase 4). See `docs/14_IMPLEMENTATION_PROGRESS.md` for live milestone status. All subsequent phases proceed strictly in the documented order.
 
 ## Getting Started
 
@@ -23,11 +25,11 @@ melos run format            # formatting check, every package
 melos run test               # unit/widget tests, every package with a test/ dir
 ```
 
-Run an app (always via an explicit flavor entry point - there is no bare `main.dart`):
+Run an app (always via an explicit flavor entry point - there is no bare `main.dart` - and its matching `--dart-define-from-file`, per `docs/11_ENVIRONMENT_CONFIGURATION.md` §3):
 
 ```bash
-cd apps/storefront && fvm flutter run -t lib/main_dev.dart
-cd apps/admin       && fvm flutter run -t lib/main_dev.dart -d chrome
+cd apps/storefront && fvm flutter run -t lib/main_dev.dart --dart-define-from-file=../../config/env/dev.env
+cd apps/admin       && fvm flutter run -t lib/main_dev.dart --dart-define-from-file=../../config/env/dev.env -d chrome
 ```
 
 This repository pins its Flutter/Dart SDK via [fvm](https://fvm.app/) (`.fvmrc` at the root - every package inherits it, no per-package pinning needed) and uses a single [pub workspace](https://dart.dev/tools/pub/workspaces) (`workspace:` in the root `pubspec.yaml`) for unified dependency resolution across all 26 packages/apps, orchestrated by [Melos](https://melos.invertase.dev/) (`melos:` key in the root `pubspec.yaml`) for cross-package scripts. See `docs/02_PROJECT_STRUCTURE.md` for the full monorepo layout.

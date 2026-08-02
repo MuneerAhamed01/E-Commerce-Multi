@@ -6,11 +6,19 @@ UI live in `packages/features/*` (see `docs/02_PROJECT_STRUCTURE.md` §3).
 
 ## Running
 
+Each flavor needs its matching `--dart-define-from-file` (see
+`docs/11_ENVIRONMENT_CONFIGURATION.md` §3):
+
 ```bash
-fvm flutter run -t lib/main_dev.dart -d chrome        # dev flavor
-fvm flutter run -t lib/main_staging.dart -d chrome    # staging flavor
-fvm flutter run -t lib/main_prod.dart -d chrome       # prod flavor
+fvm flutter run -t lib/main_dev.dart     --dart-define-from-file=../../config/env/dev.env     -d chrome
+fvm flutter run -t lib/main_staging.dart --dart-define-from-file=../../config/env/staging.env -d chrome
+fvm flutter run -t lib/main_prod.dart    --dart-define-from-file=../../config/env/prod.env    -d chrome --release
 ```
 
-Currently a Phase 1 (Project Foundation) placeholder - see
+`assets/tenants` is a symlink to the repo-root `config/tenants/` (single
+source of truth for tenant JSON files - see `bootstrap.dart` and
+`docs/11_ENVIRONMENT_CONFIGURATION.md` §6); don't replace it with a real
+directory.
+
+Currently a Phase 3 (Environment & Configuration) placeholder - see
 `docs/03_DEVELOPMENT_PHASES.md`.
