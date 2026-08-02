@@ -4,7 +4,7 @@
 
 Production-ready, multi-tenant, white-label e-commerce platform: Flutter Mobile + Flutter Web storefront, and a Flutter Admin Panel, built on Clean Architecture with Firebase-ready data contracts.
 
-**Status: Phase 11 (Search) complete** on branch `phase/11-search` (stacked on Phase 10). Storefront search entry + results with mock catalog matching, filters/sort (AND), recent searches (SharedPreferences), suggestions debounced via `AppSearchBar`. Merge to `develop` only after Phase 10 merges and Phase 11 manual QA Pass. See `docs/14_IMPLEMENTATION_PROGRESS.md` for live milestone status.
+**Status: Phase 12 (Wishlist) complete** on branch `phase/12-wishlist` (stacked on Phase 11). Authenticated wishlist with SharedPreferences persistence, app-wide `WishlistCubit`, heart toggles on product list/detail, and `/wishlist` screen. Merge to `develop` only after Phase 11 merges and Phase 12 manual QA Pass. See `docs/14_IMPLEMENTATION_PROGRESS.md` for live milestone status.
 
 ## Getting Started — how to run
 

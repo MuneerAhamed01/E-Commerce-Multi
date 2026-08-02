@@ -7,10 +7,12 @@ import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:products/products.dart';
 import 'package:search/search.dart';
+import 'package:wishlist/wishlist.dart';
 
 import 'placeholders/placeholder_page.dart';
 import 'routing/storefront_route_extras.dart';
 import 'shell/storefront_shell.dart';
+import 'wishlist/storefront_wishlist_actions.dart';
 
 /// Builds the storefront [GoRouter] (docs/09_ROUTING_PLAN.md §2).
 GoRouter createStorefrontRouter({
@@ -129,7 +131,10 @@ GoRouter createStorefrontRouter({
         builder: (context, state) {
           final categoryId =
               state.uri.queryParameters[ProductRoutes.categoryIdQueryKey];
-          return ProductListScreen(categoryId: categoryId);
+          return ProductListScreen(
+            categoryId: categoryId,
+            wishlistActionBuilder: StorefrontWishlistActions.cardToggle,
+          );
         },
       ),
       GoRoute(
@@ -137,7 +142,11 @@ GoRouter createStorefrontRouter({
         name: ProductRoutes.detailName,
         builder: (context, state) {
           final productId = state.pathParameters['productId'] ?? '';
-          return ProductDetailScreen(productId: productId);
+          return ProductDetailScreen(
+            productId: productId,
+            wishlistActionBuilder: StorefrontWishlistActions.detailToggle,
+            relatedWishlistActionBuilder: StorefrontWishlistActions.cardToggle,
+          );
         },
       ),
       StatefulShellRoute.indexedStack(
@@ -214,10 +223,9 @@ GoRouter createStorefrontRouter({
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: '/wishlist',
-                name: 'WishlistRoute',
-                builder: (context, state) =>
-                    const PlaceholderPage(title: 'Wishlist'),
+                path: WishlistRoutes.path,
+                name: WishlistRoutes.name,
+                builder: (context, state) => const WishlistScreen(),
               ),
             ],
           ),

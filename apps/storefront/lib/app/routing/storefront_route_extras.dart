@@ -3,6 +3,7 @@ import 'package:categories/categories.dart';
 import 'package:core/core.dart';
 import 'package:products/products.dart';
 import 'package:search/search.dart';
+import 'package:wishlist/wishlist.dart';
 
 /// Per-route guard metadata attached via [GoRouterState.extra] lookup by
 /// route name (docs/09_ROUTING_PLAN.md §4).
@@ -33,7 +34,7 @@ const storefrontRouteExtras = <String, StorefrontRouteExtras>{
   ProductRoutes.detailName: StorefrontRouteExtras(access: RouteAccess.public),
   SearchRoutes.entryName: StorefrontRouteExtras(access: RouteAccess.public),
   SearchRoutes.resultsName: StorefrontRouteExtras(access: RouteAccess.public),
-  'WishlistRoute': StorefrontRouteExtras(
+  WishlistRoutes.name: StorefrontRouteExtras(
     access: RouteAccess.authenticated,
     requiredFeatureFlag: FeatureFlag.wishlist,
   ),

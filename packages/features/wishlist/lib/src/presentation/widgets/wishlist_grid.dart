@@ -1,26 +1,20 @@
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
+import 'package:products/products.dart';
 
-import '../../domain/entities/product.dart';
-import 'product_card.dart';
-
-/// Responsive product grid for listing screens.
-class ProductGrid extends StatelessWidget {
-  const ProductGrid({
+/// Wishlist product grid with per-card remove affordance.
+class WishlistGrid extends StatelessWidget {
+  const WishlistGrid({
     required this.products,
     required this.onProductTap,
-    this.wishlistActionBuilder,
+    required this.onRemove,
     this.padding,
     super.key,
   });
 
   final List<Product> products;
   final ValueChanged<Product> onProductTap;
-
-  /// Optional per-card wishlist control (composed by the app shell).
-  final Widget Function(BuildContext context, Product product)?
-  wishlistActionBuilder;
-
+  final ValueChanged<Product> onRemove;
   final EdgeInsetsGeometry? padding;
 
   @override
@@ -47,7 +41,11 @@ class ProductGrid extends StatelessWidget {
             return ProductCard(
               product: product,
               onTap: () => onProductTap(product),
-              wishlistAction: wishlistActionBuilder?.call(context, product),
+              wishlistAction: AppIconButton(
+                icon: Icons.favorite,
+                tooltip: 'Remove from wishlist',
+                onPressed: () => onRemove(product),
+              ),
             );
           },
         );

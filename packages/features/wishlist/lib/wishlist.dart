@@ -1,13 +1,24 @@
 /// Let authenticated users bookmark products for later.
 ///
-/// Feature-first Clean Architecture package: `src/domain`, `src/data`, and
-/// `src/presentation` subtrees are added when this feature's implementation
-/// phase begins (Phase 12, see docs/03_DEVELOPMENT_PHASES.md and
-/// docs/04_FEATURE_IMPLEMENTATION_ORDER.md for the full specification).
+/// Only symbols exported here are a public contract other packages may depend
+/// on (docs/02_PROJECT_STRUCTURE.md §6 / §11).
 ///
-/// Only symbols exported from this barrel file are a public contract other
-/// packages may depend on (see docs/02_PROJECT_STRUCTURE.md §6 and §11).
-///
-/// Nothing is exported yet - this is a Phase 1 (Project Foundation)
-/// placeholder so the package compiles as part of the monorepo.
+/// **Circular-dep note:** `wishlist` depends on `products` for [Product]
+/// display entities. `products` does **not** depend on `wishlist` — toggle
+/// integration uses optional `wishlistAction` / `wishlistActionBuilder` slots
+/// on product widgets/screens, composed by the storefront.
 library;
+
+export 'src/domain/entities/wishlist_item.dart';
+export 'src/domain/repositories/wishlist_repository.dart';
+export 'src/domain/usecases/add_to_wishlist.dart';
+export 'src/domain/usecases/get_wishlist.dart';
+export 'src/domain/usecases/is_in_wishlist.dart';
+export 'src/domain/usecases/remove_from_wishlist.dart';
+export 'src/injection/wishlist_injection.dart';
+export 'src/presentation/cubit/wishlist_cubit.dart';
+export 'src/presentation/cubit/wishlist_state.dart';
+export 'src/presentation/routing/wishlist_routes.dart';
+export 'src/presentation/screens/wishlist_screen.dart';
+export 'src/presentation/widgets/wishlist_grid.dart';
+export 'src/presentation/widgets/wishlist_toggle_button.dart';

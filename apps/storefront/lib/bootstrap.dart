@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:products/products.dart';
 import 'package:search/search.dart';
+import 'package:wishlist/wishlist.dart';
 
 import 'app/app_widget.dart';
 
@@ -62,6 +63,8 @@ Future<void> bootstrap({
       configureCategoriesInjection();
       // Product search (Phase 11) — requires SharedPreferences from auth.
       configureSearchInjection();
+      // Wishlist (Phase 12) — requires auth session + SharedPreferences.
+      configureWishlistInjection();
 
       FlutterError.onError = (details) {
         logger.error(

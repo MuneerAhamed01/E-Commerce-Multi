@@ -23,7 +23,8 @@ dependencies:
   go_router: ^17.3.0
   products: ^0.1.0
   search: ^0.1.0
-  # Additional customer feature packages: wired starting Phase 12+
+  wishlist: ^0.1.0
+  # Additional customer feature packages: wired starting Phase 13+
   # (see docs/03_DEVELOPMENT_PHASES.md).
 
 dev_dependencies:

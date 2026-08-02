@@ -4,6 +4,7 @@ import 'package:core/core.dart';
 import 'package:products/products.dart';
 import 'package:search/search.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:wishlist/wishlist.dart';
 
 /// Minimal auth stack for storefront router widget tests.
 final class RouterTestAuth {
@@ -66,6 +67,7 @@ final class RouterTestAuth {
     configureProductsInjection();
     configureCategoriesInjection();
     configureSearchInjection();
+    configureWishlistInjection();
 
     final bloc = getIt<AuthBloc>()..add(const AuthStarted());
     await bloc.stream.firstWhere(
