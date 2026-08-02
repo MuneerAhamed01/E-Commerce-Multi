@@ -1,3 +1,4 @@
+import 'package:authentication/authentication.dart';
 import 'package:core/core.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/foundation.dart';
@@ -11,11 +12,16 @@ import 'shell/admin_shell.dart';
 GoRouter createAdminRouter({
   required AppConfig appConfig,
   required TenantConfig tenantConfig,
+  AuthSessionState Function()? sessionOf,
+  Listenable? refreshListenable,
   AuthSessionState session = const AuthSessionState.guest(),
 }) {
+  AuthSessionState currentSession() => sessionOf?.call() ?? session;
+
   return GoRouter(
-    initialLocation: SystemRoutes.adminLoginPath,
+    initialLocation: AuthRoutes.adminSplashPath,
     debugLogDiagnostics: kDebugMode,
+    refreshListenable: refreshListenable,
     redirect: (context, state) {
       final name = state.topRoute?.name;
       final extras = name == null ? null : adminRouteExtras[name];
@@ -30,7 +36,7 @@ GoRouter createAdminRouter({
           access: extras.access,
           appConfig: appConfig,
           tenantConfig: tenantConfig,
-          session: session,
+          session: currentSession(),
           requiredPermission: extras.requiredPermission,
           uri: state.uri,
         ),
@@ -42,12 +48,43 @@ GoRouter createAdminRouter({
     ),
     routes: [
       GoRoute(
-        path: SystemRoutes.adminLoginPath,
-        name: SystemRoutes.adminLoginName,
-        builder: (context, state) => const PlaceholderPage(
-          title: 'Admin Login',
-          subtitle: 'Admin auth lands in Phase 21.',
-        ),
+        path: AuthRoutes.adminSplashPath,
+        name: AuthRoutes.adminSplashName,
+        builder: (context, state) => const SplashScreen(isAdminApp: true),
+      ),
+      GoRoute(
+        path: AuthRoutes.adminLoginPath,
+        name: AuthRoutes.adminLoginName,
+        builder: (context, state) =>
+            const LoginScreen(requireAdmin: true, isAdminApp: true),
+      ),
+      GoRoute(
+        path: AuthRoutes.adminForgotPasswordPath,
+        name: AuthRoutes.adminForgotPasswordName,
+        builder: (context, state) =>
+            const ForgotPasswordScreen(isAdminApp: true),
+      ),
+      GoRoute(
+        path: AuthRoutes.adminVerifyOtpPath,
+        name: AuthRoutes.adminVerifyOtpName,
+        builder: (context, state) {
+          final email =
+              state.uri.queryParameters[AuthRoutes.emailQueryKey] ?? '';
+          return OtpVerificationScreen(
+            email: email,
+            purpose: OtpPurpose.passwordReset,
+            isAdminApp: true,
+          );
+        },
+      ),
+      GoRoute(
+        path: AuthRoutes.adminResetPasswordPath,
+        name: AuthRoutes.adminResetPasswordName,
+        builder: (context, state) {
+          final email =
+              state.uri.queryParameters[AuthRoutes.emailQueryKey] ?? '';
+          return ResetPasswordScreen(email: email, isAdminApp: true);
+        },
       ),
       GoRoute(
         path: SystemRoutes.adminMaintenancePath,

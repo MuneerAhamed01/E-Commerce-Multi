@@ -14,12 +14,12 @@
 |---|---|
 | Total Phases | 29 |
 | Total Milestones | 98 |
-| 🟩 Completed | 26 |
+| 🟩 Completed | 32 |
 | 🟨 In Progress | 0 |
-| ⬜ Pending | 72 |
-| **Overall Completion** | **27%** |
+| ⬜ Pending | 66 |
+| **Overall Completion** | **33%** |
 | Plan Approval Status | 🟩 Approved (implementation underway) |
-| Last Updated | 2026-08-02 (Phase 6 complete) |
+| Last Updated | 2026-08-02 (Phase 7 complete) |
 
 ---
 
@@ -83,12 +83,12 @@
 
 | ID | Milestone | Status | Completion Date | Notes |
 |---|---|---|---|---|
-| 7.1 | Auth domain layer | ⬜ Pending | | |
-| 7.2 | Auth data layer (mock) | ⬜ Pending | | |
-| 7.3 | Splash & onboarding | ⬜ Pending | | |
-| 7.4 | Login & register | ⬜ Pending | | |
-| 7.5 | Forgot password & OTP | ⬜ Pending | | |
-| 7.6 | Session + guard integration | ⬜ Pending | | |
+| 7.1 | Auth domain layer | 🟩 Complete | 2026-08-02 | `User`/`AuthSession`/`UserRole`, `AuthRepository`, use cases (`LoginUser`, `RegisterUser`, `LogoutUser`, `RequestPasswordReset`, `VerifyOtp`, `ResetPassword`, `GetCurrentUser`, `RefreshSession`, `RestoreSession`, onboarding flags). |
+| 7.2 | Auth data layer (mock) | 🟩 Complete | 2026-08-02 | `MockAuthRemoteDataSource` + SharedPreferences local; seed passwords `Password123!`; mock OTP `123456`; `MockAuthRepositoryImpl` exception→Failure; `configureAuthenticationInjection()`. |
+| 7.3 | Splash & onboarding | 🟩 Complete | 2026-08-02 | Tenant-branded splash resolves session→onboarding/login/home (admin→dashboard/login); first-run onboarding slides with skip/complete persistence. |
+| 7.4 | Login & register | 🟩 Complete | 2026-08-02 | Login/Register screens with Validators + design_system fields; `LoginCubit`/`RegisterCubit` + `AuthBloc`; inline credential errors. |
+| 7.5 | Forgot password & OTP | 🟩 Complete | 2026-08-02 | Forgot password → OTP (`123456`) → reset password → login; admin recovery routes mirrored under `/admin/*`. |
+| 7.6 | Session + guard integration | 🟩 Complete | 2026-08-02 | Live `AuthSessionState` via `AuthSessionMapper` + `AuthSessionListenable` in both apps; logout clears prefs; restart restores session; customer blocked from admin login. |
 
 ## Phase 8 — Dashboard / Home
 
@@ -281,5 +281,8 @@
 | 2026-08-02 | Git workflow: `main` (prod) + `develop` (integration) + `phase/<N>-*` per phase; hardened `.gitignore`/secret examples/Firebase placeholders; Dependabot + Gitleaks in CI | Engineering |
 | 2026-08-02 | Phase 5 (Routing Foundation) completed - milestones 5.1-5.4 on branch `phase/5-routing-foundation` | Engineering |
 | 2026-08-02 | Phase 6 (Mock Data Infrastructure) completed - milestones 6.1-6.3 on branch `phase/6-mock-data-infrastructure` | Engineering |
+| 2026-08-02 | Phase 7 (Authentication) completed - milestones 7.1-7.6 on branch `phase/7-authentication` | Engineering |
+| 2026-08-02 | Merge to `develop` gated on `docs/manual_qa/PHASE_07_AUTHENTICATION.md` (all cases Pass) | Engineering |
+| 2026-08-02 | Introduced `docs/manual_qa/` phase checklists; from Phase 7+, Pass required before merge to `develop` | Engineering |
 
 > Add a new row here every time this document is updated, in addition to updating the relevant milestone row above. This creates an audit trail independent of git history for quick project-status review.

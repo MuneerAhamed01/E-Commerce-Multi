@@ -1,3 +1,4 @@
+import 'package:authentication/authentication.dart';
 import 'package:core/core.dart';
 
 /// Per-route guard metadata attached via [GoRouterState.extra] lookup by
@@ -9,11 +10,19 @@ final class StorefrontRouteExtras {
   final FeatureFlag? requiredFeatureFlag;
 }
 
-/// Named-route → guard metadata for the Phase 5 storefront skeleton.
+/// Named-route → guard metadata for the storefront skeleton + auth routes.
 const storefrontRouteExtras = <String, StorefrontRouteExtras>{
-  'SplashRoute': StorefrontRouteExtras(access: RouteAccess.public),
-  'LoginRoute': StorefrontRouteExtras(access: RouteAccess.authFlow),
-  'RegisterRoute': StorefrontRouteExtras(access: RouteAccess.authFlow),
+  AuthRoutes.splashName: StorefrontRouteExtras(access: RouteAccess.public),
+  AuthRoutes.onboardingName: StorefrontRouteExtras(access: RouteAccess.public),
+  AuthRoutes.loginName: StorefrontRouteExtras(access: RouteAccess.authFlow),
+  AuthRoutes.registerName: StorefrontRouteExtras(access: RouteAccess.authFlow),
+  AuthRoutes.forgotPasswordName: StorefrontRouteExtras(
+    access: RouteAccess.authFlow,
+  ),
+  AuthRoutes.verifyOtpName: StorefrontRouteExtras(access: RouteAccess.authFlow),
+  AuthRoutes.resetPasswordName: StorefrontRouteExtras(
+    access: RouteAccess.authFlow,
+  ),
   'HomeRoute': StorefrontRouteExtras(access: RouteAccess.public),
   'CategoryBrowseRoute': StorefrontRouteExtras(access: RouteAccess.public),
   'SearchRoute': StorefrontRouteExtras(access: RouteAccess.public),

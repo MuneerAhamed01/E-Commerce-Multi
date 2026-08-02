@@ -4,35 +4,91 @@
 
 Production-ready, multi-tenant, white-label e-commerce platform: Flutter Mobile + Flutter Web storefront, and a Flutter Admin Panel, built on Clean Architecture with Firebase-ready data contracts.
 
-**Status: Phase 6 (Mock Data Infrastructure) complete** on branch `phase/6-mock-data-infrastructure`. Shared mock latency/failure utilities, seed fixtures, Developer Panel (`/dev-panel`, `/admin/dev-panel`), and a reference ping stack. See `docs/14_IMPLEMENTATION_PROGRESS.md` for live milestone status.
+**Status: Phase 7 (Authentication) complete** on branch `phase/7-authentication`. Full auth journey (splash/onboarding/login/register/forgot-password/OTP), mock session persistence, and live route-guard integration for storefront + admin. See `docs/14_IMPLEMENTATION_PROGRESS.md` for live milestone status.
 
-## Getting Started
+## Getting Started — how to run
 
-Prerequisites (one-time, per machine):
-
-```bash
-brew install fvm            # Flutter Version Manager
-dart pub global activate melos
-```
-
-Clone the repo, then from the repository root:
+### 1. Prerequisites (one-time)
 
 ```bash
-fvm install                 # installs the pinned Flutter SDK (see .fvmrc)
-melos bootstrap             # resolves the shared pub workspace (see pubspec.yaml `workspace:`)
-melos run analyze           # static analysis, every package
-melos run format            # formatting check, every package
-melos run test               # unit/widget tests, every package with a test/ dir
+brew install fvm                 # Flutter Version Manager
+dart pub global activate melos   # monorepo scripts
 ```
 
-Run an app (always via an explicit flavor entry point - there is no bare `main.dart` - and its matching `--dart-define-from-file`, per `docs/11_ENVIRONMENT_CONFIGURATION.md` §3):
+### 2. Clone & bootstrap
 
 ```bash
-cd apps/storefront && fvm flutter run -t lib/main_dev.dart --dart-define-from-file=../../config/env/dev.env
-cd apps/admin       && fvm flutter run -t lib/main_dev.dart --dart-define-from-file=../../config/env/dev.env -d chrome
+git clone https://github.com/MuneerAhamed01/E-Commerce-Multi.git
+cd E-Commerce-Multi
+
+fvm install          # installs pinned Flutter (see .fvmrc — currently 3.44.3)
+melos bootstrap      # resolves the pub workspace (root pubspec.yaml `workspace:`)
 ```
 
-This repository pins its Flutter/Dart SDK via [fvm](https://fvm.app/) (`.fvmrc` at the root - every package inherits it, no per-package pinning needed) and uses a single [pub workspace](https://dart.dev/tools/pub/workspaces) (`workspace:` in the root `pubspec.yaml`) for unified dependency resolution across all 26 packages/apps, orchestrated by [Melos](https://melos.invertase.dev/) (`melos:` key in the root `pubspec.yaml`) for cross-package scripts. See `docs/02_PROJECT_STRUCTURE.md` for the full monorepo layout.
+Always prefix Flutter/Dart with `fvm` (e.g. `fvm flutter`, `fvm dart`).
+
+### 3. Run the Storefront (customer app)
+
+From the **repo root**:
+
+```bash
+cd apps/storefront
+fvm flutter run -t lib/main_dev.dart \
+  --dart-define-from-file=../../config/env/dev.env
+```
+
+- Pick a device when prompted (iOS Simulator, Android emulator, Chrome, macOS, etc.).
+- There is **no** bare `main.dart` — always use a flavor entry (`main_dev.dart` / `main_staging.dart` / `main_prod.dart`) plus the matching env file under `config/env/`.
+
+Useful variants:
+
+```bash
+# Explicit device
+fvm flutter run -t lib/main_dev.dart \
+  --dart-define-from-file=../../config/env/dev.env \
+  -d chrome
+
+# List devices
+fvm flutter devices
+```
+
+### 4. Run the Admin panel
+
+```bash
+cd apps/admin
+fvm flutter run -t lib/main_dev.dart \
+  --dart-define-from-file=../../config/env/dev.env \
+  -d chrome
+```
+
+Admin is primarily a **web** surface; Chrome/macOS/Windows/Linux are supported.
+
+### 5. Demo login (Phase 7 — mock auth)
+
+Auth is **mock** (not Firebase). Use:
+
+| App | Email | Password |
+|---|---|---|
+| Storefront | `noah.patel02@example.com` | `Password123!` |
+| Admin | `admin@example.com` | `Password123!` |
+
+Mock OTP: `123456`. Full scenarios: [`docs/manual_qa/PHASE_07_AUTHENTICATION.md`](docs/manual_qa/PHASE_07_AUTHENTICATION.md).
+
+### 6. Quality checks (CI mirrors these)
+
+From the repo root:
+
+```bash
+melos run format     # or: fvm dart run melos run format
+melos run analyze
+melos run test
+```
+
+### 7. Manual QA gate (feature phases)
+
+From Phase 7 onward, each phase has a checklist under [`docs/manual_qa/`](docs/manual_qa/). **Merge into `develop` only after every applicable case is marked Pass.**
+
+This repository pins its Flutter/Dart SDK via [fvm](https://fvm.app/) (`.fvmrc` at the root), uses a single [pub workspace](https://dart.dev/tools/pub/workspaces) (`workspace:` in the root `pubspec.yaml`), and [Melos](https://melos.invertase.dev/) (`melos:` key in root `pubspec.yaml`) for cross-package scripts. See `docs/02_PROJECT_STRUCTURE.md` for the full monorepo layout.
 
 ## Start Here
 
@@ -84,3 +140,4 @@ git push -u origin HEAD
 - Do not put secrets in git: only `config/env/{dev,staging,prod}.env` (non-secret) are committed. Real secrets use `*.secret.env` (gitignored) from the `*.secret.env.example` templates. Firebase credentials under `config/firebase/` are gitignored except `*.example.*`.
 - CI runs secret scanning (Gitleaks) before format/analyze/test on `main`, `develop`, and `phase/**`.
 - Prefer PRs into `develop`; keep commits focused and free of credentials, keystores, and local IDE junk.
+- **Feature phases (Phase 7+):** do not merge into `develop` until the phase manual QA file in `docs/manual_qa/` is fully Pass (CI green alone is not enough).

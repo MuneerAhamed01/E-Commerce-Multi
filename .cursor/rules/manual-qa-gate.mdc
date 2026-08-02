@@ -1,0 +1,14 @@
+---
+description: Manual QA checklist required before merging any phase into develop
+alwaysApply: true
+---
+
+# Manual QA gate before `develop`
+
+For every feature/phase PR into `develop`:
+
+1. Create or update a checklist under `docs/manual_qa/PHASE_XX_<NAME>.md` with numbered scenarios the human can mark Pass/Fail.
+2. Do **not** merge into `develop` until the human has marked all applicable cases `Pass` (or justified `N/A`) in that file or in chat.
+3. When the human comments with case IDs (`P7-S05 Fail — …`), fix only those failures, then ask them to re-run the failed IDs.
+4. CI green alone is **not** sufficient to merge into `develop` once a phase ships user-facing feature behavior (Phase 7+).
+5. Keep demo credentials and run commands in the phase QA file and the feature README.
