@@ -1,7 +1,7 @@
 # Phase 14 — Checkout Manual Test Cases
 
 **Branch:** `phase/14-checkout`  
-**PR:** _(filled after open)_  
+**PR:** [https://github.com/MuneerAhamed01/E-Commerce-Multi/pull/12](https://github.com/MuneerAhamed01/E-Commerce-Multi/pull/12)  
 
 **Base:** `phase/13-cart` (stacked — merge to `develop` only after Phase 13 merges **and** every case below is `Pass` / justified `N/A`).
 
