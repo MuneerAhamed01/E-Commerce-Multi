@@ -1,4 +1,5 @@
 import 'package:authentication/authentication.dart';
+import 'package:cart/cart.dart';
 import 'package:categories/categories.dart';
 import 'package:core/core.dart';
 import 'package:products/products.dart';
@@ -34,6 +35,7 @@ const storefrontRouteExtras = <String, StorefrontRouteExtras>{
   ProductRoutes.detailName: StorefrontRouteExtras(access: RouteAccess.public),
   SearchRoutes.entryName: StorefrontRouteExtras(access: RouteAccess.public),
   SearchRoutes.resultsName: StorefrontRouteExtras(access: RouteAccess.public),
+  CartRoutes.name: StorefrontRouteExtras(access: RouteAccess.public),
   WishlistRoutes.name: StorefrontRouteExtras(
     access: RouteAccess.authenticated,
     requiredFeatureFlag: FeatureFlag.wishlist,

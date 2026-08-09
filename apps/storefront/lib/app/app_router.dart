@@ -1,4 +1,5 @@
 import 'package:authentication/authentication.dart';
+import 'package:cart/cart.dart';
 import 'package:categories/categories.dart';
 import 'package:core/core.dart';
 import 'package:dashboard/dashboard.dart';
@@ -9,6 +10,7 @@ import 'package:products/products.dart';
 import 'package:search/search.dart';
 import 'package:wishlist/wishlist.dart';
 
+import 'cart/storefront_cart_actions.dart';
 import 'placeholders/placeholder_page.dart';
 import 'routing/storefront_route_extras.dart';
 import 'shell/storefront_shell.dart';
@@ -146,6 +148,7 @@ GoRouter createStorefrontRouter({
             productId: productId,
             wishlistActionBuilder: StorefrontWishlistActions.detailToggle,
             relatedWishlistActionBuilder: StorefrontWishlistActions.cardToggle,
+            onAddToCart: StorefrontCartActions.addFromDetail,
           );
         },
       ),
@@ -217,6 +220,15 @@ GoRouter createStorefrontRouter({
                     },
                   ),
                 ],
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: [
+              GoRoute(
+                path: CartRoutes.path,
+                name: CartRoutes.name,
+                builder: (context, state) => const CartScreen(),
               ),
             ],
           ),

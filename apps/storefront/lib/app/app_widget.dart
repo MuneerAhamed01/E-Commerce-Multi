@@ -1,4 +1,5 @@
 import 'package:authentication/authentication.dart';
+import 'package:cart/cart.dart';
 import 'package:core/core.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +11,8 @@ import 'app_router.dart';
 
 /// Root widget of the Storefront app.
 ///
-/// Provides singleton [AuthBloc] + [WishlistCubit] and refreshes [GoRouter]
-/// redirects when the session changes (Phase 7 / 12).
+/// Provides singleton [AuthBloc] + [WishlistCubit] + [CartBloc] and refreshes
+/// [GoRouter] redirects when the session changes (Phase 7 / 12 / 13).
 class AppWidget extends StatefulWidget {
   const AppWidget({
     required this.appConfig,
@@ -29,6 +30,7 @@ class AppWidget extends StatefulWidget {
 class _AppWidgetState extends State<AppWidget> {
   late final AuthBloc _authBloc = getIt<AuthBloc>()..add(const AuthStarted());
   late final WishlistCubit _wishlistCubit = getIt<WishlistCubit>();
+  late final CartBloc _cartBloc = getIt<CartBloc>();
   late final AuthSessionListenable _sessionListenable = AuthSessionListenable(
     _authBloc,
   );
@@ -42,7 +44,7 @@ class _AppWidgetState extends State<AppWidget> {
   @override
   void dispose() {
     _sessionListenable.dispose();
-    // AuthBloc / WishlistCubit are DI lazySingletons — not disposed here.
+    // AuthBloc / WishlistCubit / CartBloc are DI lazySingletons — not disposed.
     super.dispose();
   }
 
@@ -52,6 +54,7 @@ class _AppWidgetState extends State<AppWidget> {
       providers: [
         BlocProvider<AuthBloc>.value(value: _authBloc),
         BlocProvider<WishlistCubit>.value(value: _wishlistCubit),
+        BlocProvider<CartBloc>.value(value: _cartBloc),
       ],
       child: MaterialApp.router(
         title: widget.tenantConfig.displayName,

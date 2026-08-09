@@ -1,4 +1,5 @@
 import 'package:authentication/authentication.dart';
+import 'package:cart/cart.dart';
 import 'package:categories/categories.dart';
 import 'package:core/core.dart';
 import 'package:products/products.dart';
@@ -68,6 +69,7 @@ final class RouterTestAuth {
     configureCategoriesInjection();
     configureSearchInjection();
     configureWishlistInjection();
+    configureCartInjection();
 
     final bloc = getIt<AuthBloc>()..add(const AuthStarted());
     await bloc.stream.firstWhere(
@@ -84,7 +86,6 @@ final class RouterTestAuth {
 
   Future<void> dispose() async {
     listenable.dispose();
-    // AuthBloc is owned by getIt; reset tears it down.
     await getIt.reset();
   }
 }
