@@ -44,7 +44,7 @@ void main() {
     expect(find.textContaining('Home'), findsWidgets);
   });
 
-  testWidgets('confirmation screen shows order stub copy', (tester) async {
+  testWidgets('confirmation screen shows view-order actions', (tester) async {
     late String orderId;
     await tester.runAsync(() async {
       await harness.seedCartLine();
@@ -83,7 +83,8 @@ void main() {
     await tester.pump(const Duration(milliseconds: 100));
 
     expect(find.text('Thank you!'), findsOneWidget);
-    expect(find.textContaining('Phase 15'), findsOneWidget);
+    expect(find.text('View order'), findsOneWidget);
+    expect(find.text('View all orders'), findsOneWidget);
     expect(find.text('Continue shopping'), findsOneWidget);
   });
 }

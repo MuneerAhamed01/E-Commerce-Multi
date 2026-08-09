@@ -24,11 +24,13 @@ void main() {
     expect(kpis.conversionRate, lessThanOrEqualTo(1));
   });
 
-  test('cancelled orders are excluded from sales totals', () async {
+  test('non-active order statuses are excluded from sales totals', () async {
+    // Must match MockDashboardAnalyticsDataSource._activeStatuses.
+    const activeStatuses = {'paid', 'shipped', 'delivered', 'pending'};
     final result = await harness.getDashboardKpis(const NoParams());
     final kpis = result.valueOrNull!;
     final activeCount = harness.store.orders
-        .where((o) => o.status != 'cancelled')
+        .where((o) => activeStatuses.contains(o.status))
         .length;
 
     expect(kpis.orderCount, activeCount);

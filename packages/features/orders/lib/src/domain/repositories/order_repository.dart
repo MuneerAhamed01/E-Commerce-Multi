@@ -3,14 +3,31 @@ import 'package:equatable/equatable.dart';
 
 import '../entities/order.dart';
 import '../entities/order_line_item.dart';
+import '../entities/order_tracking_event.dart';
 
-/// Customer order persistence contract (Phase 15.1).
+/// Customer order persistence contract (Phase 15).
 abstract class OrderRepository {
   Future<Result<Failure, Order>> createOrder(CreateOrderRequest request);
 
   Future<Result<Failure, Order>> getOrder(String orderId);
 
   Future<Result<Failure, List<Order>>> getOrders(String customerId);
+
+  Future<Result<Failure, List<OrderTrackingEvent>>> getTrackingEvents(
+    String orderId,
+  );
+
+  Future<Result<Failure, Order>> cancelOrder({
+    required String orderId,
+    required String customerId,
+    required String reason,
+  });
+
+  Future<Result<Failure, Order>> requestReturn({
+    required String orderId,
+    required String customerId,
+    required String reason,
+  });
 }
 
 /// Input for placing a new order from checkout.

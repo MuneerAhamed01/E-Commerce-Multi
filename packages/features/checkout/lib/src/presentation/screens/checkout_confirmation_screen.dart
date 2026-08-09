@@ -96,17 +96,24 @@ class _CheckoutConfirmationScreenState
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ],
-                  const SizedBox(height: 24),
-                  Text(
-                    'View order details will arrive in Phase 15.',
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Theme.of(context).colorScheme.onSurfaceVariant,
-                    ),
-                  ),
                   const Spacer(),
                   AppButton(
+                    label: 'View order',
+                    isFullWidth: true,
+                    onPressed: () =>
+                        context.push(OrderRoutes.detailPath(widget.orderId)),
+                  ),
+                  const SizedBox(height: 8),
+                  AppButton(
+                    label: 'View all orders',
+                    variant: AppButtonVariant.outline,
+                    isFullWidth: true,
+                    onPressed: () => context.push(OrderRoutes.historyPath),
+                  ),
+                  const SizedBox(height: 8),
+                  AppButton(
                     label: 'Continue shopping',
+                    variant: AppButtonVariant.text,
                     isFullWidth: true,
                     onPressed: () => context.go('/'),
                   ),

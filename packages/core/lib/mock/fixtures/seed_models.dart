@@ -145,7 +145,7 @@ final class SeedOrder extends Equatable {
   final String orderNumber;
   final String customerId;
 
-  /// `'pending'`, `'paid'`, `'shipped'`, `'delivered'`, `'cancelled'`.
+  /// Seed status string (`pending`/`paid`/…/`returnRequested`/`returned`).
   final String status;
   final String createdAtIso;
   final List<SeedOrderItem> items;
