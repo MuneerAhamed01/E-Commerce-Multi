@@ -14,12 +14,12 @@
 |---|---|
 | Total Phases | 29 |
 | Total Milestones | 98 |
-| 🟩 Completed | 50 |
+| 🟩 Completed | 53 |
 | 🟨 In Progress | 0 |
-| ⬜ Pending | 48 |
-| **Overall Completion** | **51%** |
+| ⬜ Pending | 45 |
+| **Overall Completion** | **54%** |
 | Plan Approval Status | 🟩 Approved (implementation underway) |
-| Last Updated | 2026-08-09 (Phase 14 complete; 15.1 pulled forward) |
+| Last Updated | 2026-08-09 (Phase 15 Orders UI complete) |
 
 ---
 
@@ -147,16 +147,16 @@
 | 14.2 | Address step | 🟩 Complete | 2026-08-09 | `CheckoutAddressScreen` + stepper; selectable `AppAddressCard`; add form. |
 | 14.3 | Shipping & payment method step | 🟩 Complete | 2026-08-09 | Radio tiles; Standard/Express/Overnight; Visa + COD; postal `00000` unavailable. |
 | 14.4 | Review & place order | 🟩 Complete | 2026-08-09 | Review summary + PlaceOrder (orders 15.1); idempotent double-submit; clears cart. |
-| 14.5 | Confirmation | 🟩 Complete | 2026-08-09 | Confirmation via `context.go`; Continue shopping; View order stub (Phase 15). |
+| 14.5 | Confirmation | 🟩 Complete | 2026-08-09 | Confirmation via `context.go`; Continue shopping; View order / View all orders (wired in Phase 15). |
 
 ## Phase 15 — Orders
 
 | ID | Milestone | Status | Completion Date | Notes |
 |---|---|---|---|---|
-| 15.1 | Orders domain/data | 🟩 Complete | 2026-08-09 | Pulled forward for Phase 14.4 — `Order`/`OrderStatus`/`OrderRepository` mock on `MockSeedStore`; Create/Get/GetOrders; no history UI yet. |
-| 15.2 | Order history | ⬜ Pending | | |
-| 15.3 | Order detail & tracking | ⬜ Pending | | |
-| 15.4 | Cancel/return flow | ⬜ Pending | | |
+| 15.1 | Orders domain/data | 🟩 Complete | 2026-08-09 | Pulled forward for Phase 14.4 — `Order`/`OrderStatus`/`OrderRepository` mock on `MockSeedStore`; Create/Get/GetOrders. |
+| 15.2 | Order history | 🟩 Complete | 2026-08-09 | `OrderHistoryScreen` + `OrderListBloc`; newest-first list; Profile My orders entry; `/orders`. |
+| 15.3 | Order detail & tracking | 🟩 Complete | 2026-08-09 | `OrderDetailScreen` + timeline badge widgets; synthetic tracking from status; `/orders/:orderId`. |
+| 15.4 | Cancel/return flow | 🟩 Complete | 2026-08-09 | Cancel (placed/processing) + return (delivered) via `CancelReturnDialog`; mock re-validates; call types `orders.cancel` / `orders.return`. |
 
 ## Phase 16 — Payments
 

@@ -6,14 +6,15 @@ import 'package:core/core.dart';
 import 'package:dashboard/dashboard.dart';
 import 'package:design_system/design_system.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:orders/orders.dart';
 import 'package:products/products.dart';
 import 'package:search/search.dart';
 import 'package:wishlist/wishlist.dart';
 
 import 'cart/storefront_cart_actions.dart';
 import 'checkout/storefront_checkout_actions.dart';
-import 'placeholders/placeholder_page.dart';
 import 'routing/storefront_route_extras.dart';
 import 'shell/storefront_shell.dart';
 import 'wishlist/storefront_wishlist_actions.dart';
@@ -250,10 +251,44 @@ GoRouter createStorefrontRouter({
               GoRoute(
                 path: '/profile',
                 name: 'ProfileRoute',
-                builder: (context, state) =>
-                    const PlaceholderPage(title: 'Profile'),
+                builder: (context, state) => Scaffold(
+                  appBar: AppBar(title: const Text('Profile')),
+                  body: ListView(
+                    children: [
+                      ListTile(
+                        leading: const Icon(Icons.receipt_long_outlined),
+                        title: const Text('My orders'),
+                        trailing: const Icon(Icons.chevron_right),
+                        onTap: () => context.push(OrderRoutes.historyPath),
+                      ),
+                      const Divider(height: 1),
+                      const Padding(
+                        padding: EdgeInsets.all(16),
+                        child: Text(
+                          'Full profile arrives in Phase 18.',
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ],
+          ),
+        ],
+      ),
+      GoRoute(
+        path: OrderRoutes.historyPath,
+        name: OrderRoutes.historyName,
+        builder: (context, state) => const OrderHistoryScreen(),
+        routes: [
+          GoRoute(
+            path: ':orderId',
+            name: OrderRoutes.detailName,
+            builder: (context, state) {
+              final orderId = state.pathParameters['orderId'] ?? '';
+              return OrderDetailScreen(orderId: orderId);
+            },
           ),
         ],
       ),

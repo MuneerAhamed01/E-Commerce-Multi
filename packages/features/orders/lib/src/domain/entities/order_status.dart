@@ -8,6 +8,24 @@ enum OrderStatus {
   returnRequested,
   returned;
 
+  /// Human-readable label for badges and timelines.
+  String get displayLabel => switch (this) {
+    OrderStatus.placed => 'Placed',
+    OrderStatus.processing => 'Processing',
+    OrderStatus.shipped => 'Shipped',
+    OrderStatus.delivered => 'Delivered',
+    OrderStatus.cancelled => 'Cancelled',
+    OrderStatus.returnRequested => 'Return requested',
+    OrderStatus.returned => 'Returned',
+  };
+
+  /// Cancel is allowed only while the order is still early in fulfillment.
+  bool get canCancel =>
+      this == OrderStatus.placed || this == OrderStatus.processing;
+
+  /// Returns are accepted only after the order has been delivered.
+  bool get canRequestReturn => this == OrderStatus.delivered;
+
   /// Maps [SeedOrder.status] strings into domain statuses.
   ///
   /// Seed uses `pending` / `paid`; domain uses `placed` / `processing`.

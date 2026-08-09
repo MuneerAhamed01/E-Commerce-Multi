@@ -1,6 +1,7 @@
 import 'package:core/core.dart';
 
 import '../../domain/entities/order.dart';
+import '../../domain/entities/order_tracking_event.dart';
 import '../../domain/repositories/order_repository.dart';
 import '../datasources/order_remote_data_source.dart';
 
@@ -23,6 +24,43 @@ final class MockOrderRepositoryImpl implements OrderRepository {
   @override
   Future<Result<Failure, List<Order>>> getOrders(String customerId) {
     return _guard(() => remote.fetchOrders(customerId));
+  }
+
+  @override
+  Future<Result<Failure, List<OrderTrackingEvent>>> getTrackingEvents(
+    String orderId,
+  ) {
+    return _guard(() => remote.fetchTrackingEvents(orderId));
+  }
+
+  @override
+  Future<Result<Failure, Order>> cancelOrder({
+    required String orderId,
+    required String customerId,
+    required String reason,
+  }) {
+    return _guard(
+      () => remote.cancelOrder(
+        orderId: orderId,
+        customerId: customerId,
+        reason: reason,
+      ),
+    );
+  }
+
+  @override
+  Future<Result<Failure, Order>> requestReturn({
+    required String orderId,
+    required String customerId,
+    required String reason,
+  }) {
+    return _guard(
+      () => remote.requestReturn(
+        orderId: orderId,
+        customerId: customerId,
+        reason: reason,
+      ),
+    );
   }
 
   Future<Result<Failure, T>> _guard<T>(Future<T> Function() action) async {

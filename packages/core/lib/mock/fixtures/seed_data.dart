@@ -310,6 +310,8 @@ abstract final class SeedData {
     'shipped',
     'delivered',
     'cancelled',
+    'returnRequested',
+    'returned',
   ];
 
   static List<SeedOrder> _buildOrders() {

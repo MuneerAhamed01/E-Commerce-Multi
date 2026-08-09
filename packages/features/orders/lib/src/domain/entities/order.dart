@@ -36,6 +36,42 @@ final class Order extends Equatable {
   final String? paymentMethodLabel;
   final String? shippingMethodLabel;
 
+  bool get canCancel => status.canCancel;
+
+  bool get canRequestReturn => status.canRequestReturn;
+
+  Order copyWith({
+    String? id,
+    String? orderNumber,
+    String? customerId,
+    OrderStatus? status,
+    DateTime? createdAt,
+    List<OrderLineItem>? items,
+    Address? shippingAddress,
+    Money? subtotal,
+    Money? shipping,
+    Money? tax,
+    Money? total,
+    String? paymentMethodLabel,
+    String? shippingMethodLabel,
+  }) {
+    return Order(
+      id: id ?? this.id,
+      orderNumber: orderNumber ?? this.orderNumber,
+      customerId: customerId ?? this.customerId,
+      status: status ?? this.status,
+      createdAt: createdAt ?? this.createdAt,
+      items: items ?? this.items,
+      shippingAddress: shippingAddress ?? this.shippingAddress,
+      subtotal: subtotal ?? this.subtotal,
+      shipping: shipping ?? this.shipping,
+      tax: tax ?? this.tax,
+      total: total ?? this.total,
+      paymentMethodLabel: paymentMethodLabel ?? this.paymentMethodLabel,
+      shippingMethodLabel: shippingMethodLabel ?? this.shippingMethodLabel,
+    );
+  }
+
   @override
   List<Object?> get props => [
     id,

@@ -3,6 +3,7 @@ import 'package:cart/cart.dart';
 import 'package:categories/categories.dart';
 import 'package:checkout/checkout.dart';
 import 'package:core/core.dart';
+import 'package:orders/orders.dart';
 import 'package:products/products.dart';
 import 'package:search/search.dart';
 import 'package:wishlist/wishlist.dart';
@@ -42,6 +43,12 @@ const storefrontRouteExtras = <String, StorefrontRouteExtras>{
     requiredFeatureFlag: FeatureFlag.wishlist,
   ),
   'ProfileRoute': StorefrontRouteExtras(access: RouteAccess.authenticated),
+  OrderRoutes.historyName: StorefrontRouteExtras(
+    access: RouteAccess.authenticated,
+  ),
+  OrderRoutes.detailName: StorefrontRouteExtras(
+    access: RouteAccess.authenticated,
+  ),
   CheckoutRoutes.addressName: StorefrontRouteExtras(
     access: RouteAccess.authenticated,
   ),
