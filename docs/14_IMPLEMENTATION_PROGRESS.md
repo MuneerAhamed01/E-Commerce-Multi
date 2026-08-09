@@ -14,12 +14,12 @@
 |---|---|
 | Total Phases | 29 |
 | Total Milestones | 98 |
-| 🟩 Completed | 44 |
+| 🟩 Completed | 50 |
 | 🟨 In Progress | 0 |
-| ⬜ Pending | 54 |
-| **Overall Completion** | **45%** |
+| ⬜ Pending | 48 |
+| **Overall Completion** | **51%** |
 | Plan Approval Status | 🟩 Approved (implementation underway) |
-| Last Updated | 2026-08-02 (Phase 13 complete) |
+| Last Updated | 2026-08-09 (Phase 14 complete; 15.1 pulled forward) |
 
 ---
 
@@ -143,17 +143,17 @@
 
 | ID | Milestone | Status | Completion Date | Notes |
 |---|---|---|---|---|
-| 14.1 | Checkout domain/data | ⬜ Pending | | |
-| 14.2 | Address step | ⬜ Pending | | |
-| 14.3 | Shipping & payment method step | ⬜ Pending | | |
-| 14.4 | Review & place order | ⬜ Pending | | Depends on 15.1 pulled forward — see `03_DEVELOPMENT_PHASES.md` sequencing note |
-| 14.5 | Confirmation | ⬜ Pending | | |
+| 14.1 | Checkout domain/data | 🟩 Complete | 2026-08-09 | Address book + shipping catalog + payment methods (local); `CheckoutRepository` SharedPreferences mock; use cases GetSavedAddresses/SaveAddress/GetShippingMethods/CalculateShippingCost/GetCheckoutPaymentMethods/PlaceOrder; `configureCheckoutInjection()`. |
+| 14.2 | Address step | 🟩 Complete | 2026-08-09 | `CheckoutAddressScreen` + stepper; selectable `AppAddressCard`; add form. |
+| 14.3 | Shipping & payment method step | 🟩 Complete | 2026-08-09 | Radio tiles; Standard/Express/Overnight; Visa + COD; postal `00000` unavailable. |
+| 14.4 | Review & place order | 🟩 Complete | 2026-08-09 | Review summary + PlaceOrder (orders 15.1); idempotent double-submit; clears cart. |
+| 14.5 | Confirmation | 🟩 Complete | 2026-08-09 | Confirmation via `context.go`; Continue shopping; View order stub (Phase 15). |
 
 ## Phase 15 — Orders
 
 | ID | Milestone | Status | Completion Date | Notes |
 |---|---|---|---|---|
-| 15.1 | Orders domain/data | ⬜ Pending | | Scheduled before 14.4 per sequencing note |
+| 15.1 | Orders domain/data | 🟩 Complete | 2026-08-09 | Pulled forward for Phase 14.4 — `Order`/`OrderStatus`/`OrderRepository` mock on `MockSeedStore`; Create/Get/GetOrders; no history UI yet. |
 | 15.2 | Order history | ⬜ Pending | | |
 | 15.3 | Order detail & tracking | ⬜ Pending | | |
 | 15.4 | Cancel/return flow | ⬜ Pending | | |

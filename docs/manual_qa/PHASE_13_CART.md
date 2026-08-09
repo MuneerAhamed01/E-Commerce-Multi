@@ -68,7 +68,7 @@ fvm flutter run -t lib/main_dev.dart \
 
 1. Open `/products` → product detail → **Add to cart** → snackbar + **View cart**.  
 2. Bottom nav **Cart** (badge shows sum of quantities) → `/cart`.  
-3. Change quantity, apply `SAVE10`, tap **Checkout** → soft “Phase 14” snackbar.  
+3. Change quantity, apply `SAVE10`, tap **Checkout** → `/checkout/address` (auth) or login redirect (guest).  
 4. Empty cart → **Start Shopping** → `/products`.  
 5. Kill/relaunch — cart still present for same guest/user.
 
@@ -101,7 +101,7 @@ fvm flutter run -t lib/main_dev.dart \
 | P13-S12 | Promo NOSPEND | Small cart → `NOSPEND` | Inline min-spend error | ⬜ | |
 | P13-S13 | Single promo | Apply `SAVE10` then `SAVE5` | Only one applied; totals use latest valid | ⬜ | |
 | P13-S14 | Remove promo | Applied code → remove | Discount cleared | ⬜ | |
-| P13-S15 | Checkout soft CTA | Non-empty → **Checkout** | Snackbar “Checkout coming in Phase 14” | ⬜ | |
+| P13-S15 | Checkout CTA | Non-empty → **Checkout** | Navigates to `/checkout/address` when authenticated (guest → login with return-to). Soft Phase 14 snackbar removed on `phase/14-checkout`. | ⬜ | |
 | P13-S16 | Persist restart | Add items → kill/relaunch | Same cart restored | ⬜ | |
 | P13-S17 | Failure + retry | Dev Panel force `cart.get` → open Cart | Error + Retry; clear failure → succeeds | ⬜ | |
 

@@ -1,6 +1,7 @@
 import 'package:authentication/authentication.dart';
 import 'package:cart/cart.dart';
 import 'package:categories/categories.dart';
+import 'package:checkout/checkout.dart';
 import 'package:core/core.dart';
 import 'package:products/products.dart';
 import 'package:search/search.dart';
@@ -41,6 +42,18 @@ const storefrontRouteExtras = <String, StorefrontRouteExtras>{
     requiredFeatureFlag: FeatureFlag.wishlist,
   ),
   'ProfileRoute': StorefrontRouteExtras(access: RouteAccess.authenticated),
+  CheckoutRoutes.addressName: StorefrontRouteExtras(
+    access: RouteAccess.authenticated,
+  ),
+  CheckoutRoutes.shippingPaymentName: StorefrontRouteExtras(
+    access: RouteAccess.authenticated,
+  ),
+  CheckoutRoutes.reviewName: StorefrontRouteExtras(
+    access: RouteAccess.authenticated,
+  ),
+  CheckoutRoutes.confirmationName: StorefrontRouteExtras(
+    access: RouteAccess.authenticated,
+  ),
   'MaintenanceRoute': StorefrontRouteExtras(access: RouteAccess.maintenance),
   'DevPanelRoute': StorefrontRouteExtras(access: RouteAccess.developer),
 };

@@ -1,7 +1,9 @@
 import 'package:authentication/authentication.dart';
 import 'package:cart/cart.dart';
 import 'package:categories/categories.dart';
+import 'package:checkout/checkout.dart';
 import 'package:core/core.dart';
+import 'package:orders/orders.dart';
 import 'package:products/products.dart';
 import 'package:search/search.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -70,6 +72,8 @@ final class RouterTestAuth {
     configureSearchInjection();
     configureWishlistInjection();
     configureCartInjection();
+    configureOrdersInjection();
+    configureCheckoutInjection();
 
     final bloc = getIt<AuthBloc>()..add(const AuthStarted());
     await bloc.stream.firstWhere(

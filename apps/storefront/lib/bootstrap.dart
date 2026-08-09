@@ -4,10 +4,12 @@ import 'dart:convert';
 import 'package:authentication/authentication.dart';
 import 'package:cart/cart.dart';
 import 'package:categories/categories.dart';
+import 'package:checkout/checkout.dart';
 import 'package:core/core.dart';
 import 'package:dashboard/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:orders/orders.dart';
 import 'package:products/products.dart';
 import 'package:search/search.dart';
 import 'package:wishlist/wishlist.dart';
@@ -68,6 +70,10 @@ Future<void> bootstrap({
       configureWishlistInjection();
       // Cart (Phase 13) — requires products + SharedPreferences.
       configureCartInjection();
+      // Orders domain (15.1 pulled forward for Phase 14 PlaceOrder).
+      configureOrdersInjection();
+      // Checkout (Phase 14) — requires cart + orders + auth.
+      configureCheckoutInjection();
 
       FlutterError.onError = (details) {
         logger.error(

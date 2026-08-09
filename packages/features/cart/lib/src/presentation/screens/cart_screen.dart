@@ -11,8 +11,14 @@ import '../widgets/cart_line_item.dart';
 import '../widgets/cart_summary_panel.dart';
 
 /// Cart management screen (`/cart`).
+///
+/// [onCheckoutNavigate] is composed by the host app so `cart` never depends on
+/// `checkout` (push `/checkout/address` when authenticated).
 class CartScreen extends StatelessWidget {
-  const CartScreen({super.key});
+  const CartScreen({this.onCheckoutNavigate, super.key});
+
+  /// Host-provided checkout navigation (storefront wires Phase 14 route).
+  final VoidCallback? onCheckoutNavigate;
 
   @override
   Widget build(BuildContext context) {
@@ -40,18 +46,16 @@ class CartScreen extends StatelessWidget {
             return false;
           }
           if (prev is! CartLoaded) {
-            return next.statusMessage != null || next.checkoutMessage != null;
+            return next.statusMessage != null;
           }
-          return (next.statusMessage != null &&
-                  next.statusMessage != prev.statusMessage) ||
-              (next.checkoutMessage != null &&
-                  next.checkoutMessage != prev.checkoutMessage);
+          return next.statusMessage != null &&
+              next.statusMessage != prev.statusMessage;
         },
         listener: (context, state) {
           if (state is! CartLoaded) {
             return;
           }
-          final message = state.checkoutMessage ?? state.statusMessage;
+          final message = state.statusMessage;
           if (message == null) {
             return;
           }
@@ -120,9 +124,19 @@ class CartScreen extends StatelessWidget {
                           onRemovePromo: () => context.read<CartBloc>().add(
                             const CartPromoRemoved(),
                           ),
-                          onCheckout: () => context.read<CartBloc>().add(
-                            const CartCheckoutPressed(),
-                          ),
+                          onCheckout:
+                              onCheckoutNavigate ??
+                              () {
+                                ScaffoldMessenger.of(context)
+                                  ..hideCurrentSnackBar()
+                                  ..showSnackBar(
+                                    const SnackBar(
+                                      content: Text(
+                                        'Checkout is unavailable in this build.',
+                                      ),
+                                    ),
+                                  );
+                              },
                         ),
                       ],
                     ),

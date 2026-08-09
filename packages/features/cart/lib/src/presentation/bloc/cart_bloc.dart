@@ -276,11 +276,7 @@ final class CartBloc extends Bloc<CartEvent, CartState> {
   }
 
   void _onCheckoutPressed(CartCheckoutPressed event, Emitter<CartState> emit) {
-    final current = state;
-    if (current is! CartLoaded || current.cart.isEmpty) {
-      return;
-    }
-    emit(current.copyWith(checkoutMessage: 'Checkout coming in Phase 14'));
+    // Navigation is owned by the host via CartScreen.onCheckoutNavigate.
   }
 
   Future<void> _onAuthState(AuthState authState) async {
