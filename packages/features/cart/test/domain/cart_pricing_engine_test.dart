@@ -3,8 +3,7 @@ import 'package:core/core.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  Money money(int minor) =>
-      Money(minorUnits: minor, currencyCode: 'USD');
+  Money money(int minor) => Money(minorUnits: minor, currencyCode: 'USD');
 
   Cart cartWith(List<CartItem> items) {
     return Cart(ownerId: 'guest', items: items);
