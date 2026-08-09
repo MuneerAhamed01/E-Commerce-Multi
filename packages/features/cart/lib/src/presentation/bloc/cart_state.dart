@@ -43,7 +43,7 @@ final class CartLoaded extends CartState {
   final bool isApplyingPromo;
   final String? statusMessage;
 
-  /// Soft Phase 14 placeholder message after checkout tap.
+  /// Soft fallback when [CartScreen.onCheckoutNavigate] is not wired.
   final String? checkoutMessage;
 
   Cart get cart => summary.cart;

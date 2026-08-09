@@ -39,7 +39,8 @@ fvm flutter run -t lib/main_dev.dart \
 
 1. Open any product detail → **Add to cart** → snackbar with **View cart**.
 2. Shell cart badge (top bar / nav) → `/cart`.
-3. Adjust quantity, apply `SAVE10`, tap Checkout → Phase 14 soft message.
+3. Adjust quantity, apply `SAVE10`, tap Checkout → `/checkout/address` (storefront
+   wires navigation; cart package has no checkout dependency).
 4. Empty cart → **Start Shopping** → `/products`.
 5. Kill/relaunch app — cart persists (SharedPreferences `cart.<ownerId>`).
 

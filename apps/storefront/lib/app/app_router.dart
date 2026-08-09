@@ -1,6 +1,7 @@
 import 'package:authentication/authentication.dart';
 import 'package:cart/cart.dart';
 import 'package:categories/categories.dart';
+import 'package:checkout/checkout.dart';
 import 'package:core/core.dart';
 import 'package:dashboard/dashboard.dart';
 import 'package:design_system/design_system.dart';
@@ -11,6 +12,7 @@ import 'package:search/search.dart';
 import 'package:wishlist/wishlist.dart';
 
 import 'cart/storefront_cart_actions.dart';
+import 'checkout/storefront_checkout_actions.dart';
 import 'placeholders/placeholder_page.dart';
 import 'routing/storefront_route_extras.dart';
 import 'shell/storefront_shell.dart';
@@ -228,7 +230,9 @@ GoRouter createStorefrontRouter({
               GoRoute(
                 path: CartRoutes.path,
                 name: CartRoutes.name,
-                builder: (context, state) => const CartScreen(),
+                builder: (context, state) => CartScreen(
+                  onCheckoutNavigate: () => navigateToCheckout(context),
+                ),
               ),
             ],
           ),
@@ -250,6 +254,47 @@ GoRouter createStorefrontRouter({
                     const PlaceholderPage(title: 'Profile'),
               ),
             ],
+          ),
+        ],
+      ),
+      GoRoute(
+        path: '/checkout',
+        redirect: (context, state) {
+          if (state.uri.path == '/checkout') {
+            return CheckoutRoutes.addressPath;
+          }
+          return null;
+        },
+        routes: [
+          ShellRoute(
+            builder: (context, state, child) =>
+                CheckoutWizardScope(child: child),
+            routes: [
+              GoRoute(
+                path: 'address',
+                name: CheckoutRoutes.addressName,
+                builder: (context, state) => const CheckoutAddressScreen(),
+              ),
+              GoRoute(
+                path: 'shipping-payment',
+                name: CheckoutRoutes.shippingPaymentName,
+                builder: (context, state) =>
+                    const CheckoutShippingPaymentScreen(),
+              ),
+              GoRoute(
+                path: 'review',
+                name: CheckoutRoutes.reviewName,
+                builder: (context, state) => const CheckoutReviewScreen(),
+              ),
+            ],
+          ),
+          GoRoute(
+            path: 'confirmation/:orderId',
+            name: CheckoutRoutes.confirmationName,
+            builder: (context, state) {
+              final orderId = state.pathParameters['orderId'] ?? '';
+              return CheckoutConfirmationScreen(orderId: orderId);
+            },
           ),
         ],
       ),

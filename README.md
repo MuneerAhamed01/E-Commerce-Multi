@@ -4,7 +4,7 @@
 
 Production-ready, multi-tenant, white-label e-commerce platform: Flutter Mobile + Flutter Web storefront, and a Flutter Admin Panel, built on Clean Architecture with Firebase-ready data contracts.
 
-**Status: Phase 13 (Cart) complete** on branch `phase/13-cart` (stacked on Phase 12). Guest/user cart with SharedPreferences persistence, pricing + local mock promo codes, app-wide `CartBloc`, `/cart` screen, shell cart badge, and product-detail add-to-cart. Merge to `develop` only after Phase 12 merges and Phase 13 manual QA Pass. See `docs/14_IMPLEMENTATION_PROGRESS.md` for live milestone status.
+**Status: Phase 14 (Checkout) complete** on branch `phase/14-checkout` (stacked on Phase 13). Checkout wizard (address → shipping/payment → review → confirmation), Orders 15.1 pulled forward for PlaceOrder, mock address book + payment methods inside checkout until Profile/Payments. Merge to `develop` only after Phase 13 merges and Phase 14 manual QA Pass. See `docs/14_IMPLEMENTATION_PROGRESS.md` for live milestone status.
 
 ## Getting Started — how to run
 
