@@ -10,7 +10,7 @@
 | Tester | |
 | Date | |
 | Platform(s) | e.g. macOS storefront / iOS simulator / Chrome |
-| Build / commit | _(fill after push)_ |
+| Build / commit | `0d6c7dd` (or later on this branch) |
 | Overall result | ⬜ Not started · 🟨 In progress · 🟩 Ready to merge |
 
 **How to mark results**
