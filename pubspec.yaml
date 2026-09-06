@@ -38,7 +38,7 @@ workspace:
   - packages/features/tenant_management
 
 dev_dependencies:
-  melos: ^8.2.0
+  melos: ^8.6.0
 
 melos:
   command:
