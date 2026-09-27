@@ -14,7 +14,7 @@ environment:
 
 dependencies:
   equatable: ^2.1.0 # value equality for Failure/Result-adjacent value types
-  get_it: ^9.2.1 # service locator
+  get_it: ^9.3.0 # service locator
   injectable: ^3.0.0 # annotation-driven DI registration
   intl: ^0.20.3 # currency/date/number formatting
 
